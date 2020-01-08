@@ -33,28 +33,28 @@ init(#game{start = Start} = Game) ->
 callback_mode() ->
     handle_event_function.
 
-handle_event({call, From}, <<"reseni ", Guess/binary>>, {move, MoveName}, State) ->
+handle_event({call, From}, <<"reseni ", Guess/binary>>, {move, MoveName}, #state{game = Game} = State) ->
     io:format("Guess: ~p~n", [Guess]),
     Answer = get_answer(get_task_definition(MoveName, get_moves(State))),
     io:format("Answer: ~p~n", [Answer]),
     case Guess =:= Answer of
         true ->
             NextState = get_next_state(get_task_definition(MoveName, get_moves(State))),
-            io:format("NextState: ~p~n", [NextState]),
-            {next_state, NextState, State, [{reply, From, <<"move ok: to bylo dobre">>}]};
+            Assignment = get_assignment(NextState, Game),
+            {next_state, NextState, State, [{reply, From, [<<"move ok: to bylo dobre">>] ++ Assignment}]};
         false ->
             {keep_state, State, [{reply, From, <<"jeste tam nejsi">>}]}
     end;
 
-handle_event({call, From}, <<"reseni ", Guess/binary>>, {puzzle, PuzzleName}, State) ->
+handle_event({call, From}, <<"reseni ", Guess/binary>>, {puzzle, PuzzleName}, #state{game = Game} = State) ->
     io:format("Guess: ~p~n", [Guess]),
     Answer = get_answer(get_task_definition(PuzzleName, get_puzzles(State))),
     io:format("Answer: ~p~n", [Answer]),
     case Guess =:= Answer of
         true ->
             NextState = get_next_state(get_task_definition(PuzzleName, get_puzzles(State))),
-            io:format("NextState: ~p~n", [NextState]),
-            {next_state, NextState, State, [{reply, From, <<"puzzle ok: to bylo dobre">>}]};
+            Assignment = get_assignment(NextState, Game),
+            {next_state, NextState, State, [{reply, From, [<<"puzzle ok: to bylo dobre">>] ++ Assignment}]};
         false ->
             {keep_state, State, [{reply, From, <<"jeste tam nejsi">>}]}
     end;
@@ -68,6 +68,15 @@ handle_event(Type, Content, StateName, State) ->
     io:format("StateName: ~p~n", [StateName]),
     io:format("State: ~p~n", [State]),
     {keep_state, State, []}.
+
+get_assignment(finish, #game{}) ->
+    [{text, <<"gratulujeme k absolvovani hry">>}];
+get_assignment({move, MoveName}, #game{moves = Moves} = Game) ->
+    #{MoveName := #task{assignment = Assignment}} = Moves,
+    Assignment;
+get_assignment({puzzle, PuzzleName}, #game{puzzles = Puzzles} = Game) ->
+    #{PuzzleName := #task{assignment = Assignment}} = Puzzles,
+    Assignment.
 
 get_moves(#state{game = #game{moves = Moves}}) ->
     Moves.
