@@ -24,7 +24,7 @@ task_from_map(Name, #{<<"answer">> := Answer,
                   <<"next_state">> := NextState}) ->
     #task{name = Name,
           assignment = messages_from_list(Assignment),
-          answer = Answer,
+          answer = string:casefold(Answer),
           next_state = next_state_from_json(NextState)}.
 
 tasks_from_map(Puzzles) ->
@@ -75,6 +75,7 @@ all_rules(Game) ->
     lists:flatten([
      rule_start_is_valid(Game)
      ,rule_valid_next_states(Game)
+     % TODO: finish reachable
     ]).
 
 validate(#game{} = Game) ->

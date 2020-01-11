@@ -8,13 +8,13 @@
 
 -include("game.hrl").
 
-
--define(GUESS, <<"heslo je ">>).
-
 -record(state, {
           game :: #game{},
             points = 0 :: integer()
          }).
+
+%   f(Pid), {ok, Pid} = game_fsm:start("../cibulka_game/definition.json").
+%   game_fsm:send_event(Pid, <<"napoveda">>).
 
 start(GameSpecPath) ->
     {ok, File} = file:read_file(GameSpecPath),
@@ -23,7 +23,10 @@ start(GameSpecPath) ->
     gen_statem:start(?MODULE, GameSpec, []).
 
 send_event(Pid, Msg) ->
-    gen_statem:call(Pid, Msg).
+    case game_commands:command(Msg) of
+        error -> {text, <<"prikaz nerozpoznan, nevis-li co a jak napis '?'"/utf8>>};
+        Command -> gen_statem:call(Pid, Command)
+    end.
 
 % handlers
 init(#game{start = Start} = Game) ->
@@ -33,7 +36,17 @@ init(#game{start = Start} = Game) ->
 callback_mode() ->
     handle_event_function.
 
-handle_event({call, From}, <<"reseni ", Guess/binary>>, {move, MoveName}, #state{game = Game} = State) ->
+handle_event({call, From}, {help}, _, #state{} = State) ->
+    {keep_state, State, [{reply, From, game_commands:help()}]};
+
+handle_event({call, From}, {assignment}, {move, _} = CurrentState, #state{game = Game} = State) ->
+    Assignment = get_assignment(CurrentState, Game),
+    {keep_state, State, [{reply, From, Assignment}]};
+handle_event({call, From}, {assignment}, {puzzle, _} = CurrentState, #state{game = Game} = State) ->
+    Assignment = get_assignment(CurrentState, Game),
+    {keep_state, State, [{reply, From, Assignment}]};
+
+handle_event({call, From}, {guess, Guess}, {move, MoveName}, #state{game = Game} = State) ->
     io:format("Guess: ~p~n", [Guess]),
     Answer = get_answer(get_task_definition(MoveName, get_moves(State))),
     io:format("Answer: ~p~n", [Answer]),
@@ -41,12 +54,12 @@ handle_event({call, From}, <<"reseni ", Guess/binary>>, {move, MoveName}, #state
         true ->
             NextState = get_next_state(get_task_definition(MoveName, get_moves(State))),
             Assignment = get_assignment(NextState, Game),
-            {next_state, NextState, State, [{reply, From, [<<"move ok: to bylo dobre">>] ++ Assignment}]};
+            {next_state, NextState, State, [{reply, From, [{text, <<"move ok: to bylo dobre">>}] ++ Assignment}]};
         false ->
             {keep_state, State, [{reply, From, <<"jeste tam nejsi">>}]}
     end;
 
-handle_event({call, From}, <<"reseni ", Guess/binary>>, {puzzle, PuzzleName}, #state{game = Game} = State) ->
+handle_event({call, From}, {guess, Guess}, {puzzle, PuzzleName}, #state{game = Game} = State) ->
     io:format("Guess: ~p~n", [Guess]),
     Answer = get_answer(get_task_definition(PuzzleName, get_puzzles(State))),
     io:format("Answer: ~p~n", [Answer]),
@@ -58,16 +71,26 @@ handle_event({call, From}, <<"reseni ", Guess/binary>>, {puzzle, PuzzleName}, #s
         false ->
             {keep_state, State, [{reply, From, <<"jeste tam nejsi">>}]}
     end;
-handle_event({call, From}, Event, {puzzle, MoveName}, #state{} = State) ->
-    {keep_state, State, [{reply, From, <<"to neni spravny kod">>}]};
+
+handle_event({call, From}, {hint}, {puzzle, PuzzleName} = CurrentState, #state{game = Game} = State) ->
+    {next_state, {confirm_hint, CurrentState}, State, [{reply, From, {question,<<"Opravdu chces vyuzit napovedu?">>}}]};
+
+handle_event({call, From}, {hint}, CurrentState, #state{game = Game} = State) ->
+    {keep_state, State, [{reply, From, {text,<<"Napovedy mame jen pro sifry">>}}]};
+
+handle_event({call, From}, {yes}, {confirm_hint, StateToGo}, #state{game = Game} = State) ->
+    {next_state, StateToGo, State, [{reply, From, <<"bude to neco jako osm">>}]};
+    
+handle_event({call, From}, {no}, {confirm_hint, StateToGo}, #state{game = Game} = State) ->
+    {next_state, StateToGo, State, [{reply, From, <<"tak se mi libis, jen verim, ze to das">>}]};
+
 handle_event({call, From}, Event, finish, #state{} = State) ->
     {keep_state, State, [{reply, From, <<"uz jsi v cili">>}]};
-handle_event(Type, Content, StateName, State) ->
-    io:format("Type: ~p~n", [Type]),
+handle_event({call, From}, Content, StateName, State) ->
     io:format("Content: ~p~n", [Content]),
     io:format("StateName: ~p~n", [StateName]),
     io:format("State: ~p~n", [State]),
-    {keep_state, State, []}.
+    {keep_state, State, [{reply, From, <<"tenhle prikaz ted nejde pouzit">>}]}.
 
 get_assignment(finish, #game{}) ->
     [{text, <<"gratulujeme k absolvovani hry">>}];
