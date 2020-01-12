@@ -5,10 +5,11 @@
 -type task() :: {binary(), task_spec()}.
 
 
--record(task, {name::binary(),
-               assignment::messages(),
-               answer::binary(),
-               next_state::task_link()
+-record(task, {name::binary()
+              ,assignment::messages()
+              ,answer::binary()
+              ,next_state::task_link()
+              ,hint::messages()
               }).
 -record(game, {
           name:: binary(),

@@ -9,8 +9,8 @@ game_from_json(#{<<"title">> := Name,
                  } = _Json) ->
     Game = #game{name = Name,
           start = start_from_list(Start),
-          moves = tasks_from_map(Moves),
-          puzzles = tasks_from_map(Puzzles)
+          moves = moves_from_map(Moves),
+          puzzles = puzzles_from_map(Puzzles)
          },
     [] = validate(Game),
     Game.
@@ -19,16 +19,32 @@ start_from_list([<<"move">>, MoveName | _T]) ->
     {move, MoveName};
 start_from_list([<<"puzzle">>, PuzzleName | _T]) ->
     {puzzle, PuzzleName}.
-task_from_map(Name, #{<<"answer">> := Answer,
-                  <<"assignment">> := Assignment,
-                  <<"next_state">> := NextState}) ->
+move_from_map(Name, #{<<"answer">> := Answer
+                     ,<<"assignment">> := Assignment
+                     ,<<"next_state">> := NextState}
+                    ) ->
     #task{name = Name,
           assignment = messages_from_list(Assignment),
           answer = string:casefold(Answer),
           next_state = next_state_from_json(NextState)}.
 
-tasks_from_map(Puzzles) ->
-    maps:map(fun task_from_map/2, Puzzles).
+moves_from_map(Puzzles) ->
+    maps:map(fun move_from_map/2, Puzzles).
+
+puzzle_from_map(Name, #{<<"answer">> := Answer
+                     ,<<"assignment">> := Assignment
+                     ,<<"next_state">> := NextState
+                     ,<<"hint">> := Hint}
+                    ) ->
+    #task{name = Name
+         ,assignment = messages_from_list(Assignment)
+         ,answer = string:casefold(Answer)
+         ,next_state = next_state_from_json(NextState)
+         ,hint = messages_from_list(Hint)
+         }.
+
+puzzles_from_map(Puzzles) ->
+    maps:map(fun puzzle_from_map/2, Puzzles).
 
 messages_from_list(List) ->
     lists:map(fun message_from_map/1, List).
@@ -76,6 +92,7 @@ all_rules(Game) ->
      rule_start_is_valid(Game)
      ,rule_valid_next_states(Game)
      % TODO: finish reachable
+     % TODO: images exists
     ]).
 
 validate(#game{} = Game) ->
