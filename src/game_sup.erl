@@ -31,8 +31,13 @@ start_link() ->
 %% Before OTP 18 tuples must be used to specify a child. e.g.
 %% Child :: {Id,StartFunc,Restart,Shutdown,Type,Modules}
 init([]) ->
-    {ok, {{one_for_all, 0, 1}, []}}.
-
-%%====================================================================
-%% Internal functions
-%%====================================================================
+    {ok, {{one_for_all, 1, 1},[
+                               #{id => game_yaws_sup
+                                ,start => {game_yaws_sup, start_link, []}
+                                }
+                              ,#{id => game_session_sup
+                                ,start => {game_session_sup, start_link, [
+                                      {<<"cibulka">>, <<"../cibulka_game/definition.json">>}
+                                    ]}
+                               }
+                              ]}}.
