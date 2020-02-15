@@ -3,7 +3,7 @@
 -export([init/1,
          callback_mode/0,
          handle_event/4]).
--export([start/1,
+-export([start_link/1,
          send_event/2]).
 
 -include("game.hrl").
@@ -20,20 +20,18 @@
 -define(POINTS_PUZZLE_OK, 10).
 -define(POINTS_HINT, -5).
 
+%   {ok, SessionHolder} = game_session_sup:sessions(<<"cibulka">>).
+%   game_session:get_session(SessionHolder, mirek).
+
 
 %   f(Pid), {ok, Pid, _} = game_fsm:start("../cibulka_game/definition.json").
 %   game_fsm:send_event(Pid, <<"napoveda">>).
 
-start(GameSpecPath) ->
+start_link(GameSpecPath) ->
     {ok, File} = file:read_file(GameSpecPath),
     Json = jiffy:decode(File, [return_maps]),
     GameSpec = game_records:game_from_json(Json),
-    Response = gen_statem:start(?MODULE, GameSpec, []),
-    case Response of
-        {ok, Pid} ->
-            {ok, Pid, send_event(Pid, <<"ahoj">>)};
-        _ -> Response
-    end.
+    gen_statem:start_link(?MODULE, GameSpec, []).
 
 send_event(Pid, Msg) ->
     case game_commands:command(Msg) of
