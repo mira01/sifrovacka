@@ -35,7 +35,7 @@ start_link(GameSpecPath) ->
 
 send_event(Pid, Msg) ->
     case game_commands:command(Msg) of
-        error -> {text, <<"prikaz nerozpoznan, nevis-li co a jak napis '?'"/utf8>>};
+        error -> [{text, <<"prikaz nerozpoznan, nevis-li co a jak napis '?'"/utf8>>}];
         Command -> gen_statem:call(Pid, Command)
     end.
 

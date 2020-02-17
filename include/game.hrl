@@ -11,11 +11,21 @@
               ,next_state::task_link()
               ,hint::messages()
               }).
+
 -record(game, {
           name:: binary(),
           start::task_link(),
           moves::[task()],
           puzzles::[task()]
          }).
+
+-record(event, {
+                 type :: text_message,
+                 timestamp :: integer(),
+                 sender :: binary(),
+                 recipient :: binary(),
+                 content :: term()
+               }
+       ).
 
 -type game_spec() :: #game{}.
