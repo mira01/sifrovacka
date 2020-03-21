@@ -37,7 +37,7 @@ init([]) ->
                                 }
                               ,#{id => game_session_sup
                                 ,start => {game_session_sup, start_link, [
-                                      {<<"cibulka">>, <<"../cibulka_game/definition.json">>}
+                                      {<<"cibulka">>, <<"/definitions/cibulka_game/definition.json">>}
                                     ]}
                                }
                               ]}}.
