@@ -52,10 +52,10 @@ handle_event({call, From}, {yes}, {confirm_hint, StateToGo}, #state{game = Game}
     State2 = log(hint, StateToGo, State),
     {next_state, StateToGo, State2, [{reply, From, Hint}]};
 
-handle_event({call, From}, {no}, {confirm_hint, StateToGo}, #state{game = Game} = State) ->
+handle_event({call, From}, {no}, {confirm_hint, StateToGo}, State) ->
     {next_state, StateToGo, State, [{reply, From, <<"tak se mi libis, jen verim, ze to das">>}]};
 
-handle_event({call, From}, _, {confirm_hint, StateToGo}, #state{game = Game} = State) ->
+handle_event({call, From}, _, {confirm_hint, StateToGo}, State) ->
     {next_state, StateToGo, State, [{reply, From, <<"nerekl jsi, zda napovedu chces, nebo ne, takze jsem ti ji neposlal.
     pokud ji budes chtit, tak napis 'napoveda' a pak potvrd">>}]};
 
@@ -78,7 +78,7 @@ handle_event({call, From}, {assignment}, {puzzle, _} = CurrentState, #state{game
     Assignment = get_assignment(CurrentState, Game),
     {keep_state, State, [{reply, From, Assignment}]};
 
-handle_event({call, From}, {guess, Guess}, {move, MoveName} = CurrentState, #state{game = Game} = State) ->
+handle_event({call, From}, {guess, Guess}, {move, _MoveName} = CurrentState, #state{game = Game} = State) ->
     Answer = get_answer(CurrentState, Game),
     case Guess =:= Answer of
         true ->
@@ -90,7 +90,7 @@ handle_event({call, From}, {guess, Guess}, {move, MoveName} = CurrentState, #sta
             {keep_state, State2, [{reply, From, <<"jeste tam nejsi">>}]}
     end;
 
-handle_event({call, From}, {guess, Guess}, {puzzle, PuzzleName} = CurrentState, #state{game = Game} = State) ->
+handle_event({call, From}, {guess, Guess}, {puzzle, _PuzzleName} = CurrentState, #state{game = Game} = State) ->
     Answer = get_answer(CurrentState, Game),
     case Guess =:= Answer of
         true ->
@@ -102,7 +102,7 @@ handle_event({call, From}, {guess, Guess}, {puzzle, PuzzleName} = CurrentState, 
             {keep_state, State2, [{reply, From, <<"to bylo spatne">>}]}
     end;
 
-handle_event({call, From}, {hint}, {puzzle, PuzzleName} = CurrentState, #state{game = Game} = State) ->
+handle_event({call, From}, {hint}, {puzzle, _PuzzleName} = CurrentState, #state{game = Game} = State) ->
     case hint_used(CurrentState, State) of
         true ->
             Hint = get_hint(CurrentState, Game),
@@ -111,13 +111,13 @@ handle_event({call, From}, {hint}, {puzzle, PuzzleName} = CurrentState, #state{g
             {next_state, {confirm_hint, CurrentState}, State, [{reply, From, {question,<<"Opravdu chces vyuzit napovedu?">>}}]}
     end;
 
-handle_event({call, From}, {hint}, CurrentState, #state{game = Game} = State) ->
+handle_event({call, From}, {hint}, _CurrentState, State) ->
     {keep_state, State, [{reply, From, {text,<<"Napovedy mame jen pro sifry">>}}]};
 
-handle_event({call, From}, {give_up}, {puzzle, PuzzleName} = CurrentState, #state{game = Game} = State) ->
+handle_event({call, From}, {give_up}, {puzzle, _PuzzleName} = CurrentState, State) ->
     {next_state, {confirm_giveup, CurrentState}, State, [{reply, From, {question,<<"Opravdu chces vzdat tento ukol a jit na dalsi?">>}}]};
 
-handle_event({call, From}, {give_up}, CurrentState, #state{game = Game} = State) ->
+handle_event({call, From}, {give_up}, _CurrentState, State) ->
     {keep_state, State, [{reply, From, {text,<<"tohle se vzdat neda....">>}}]};
 
 handle_event({call, From}, {yes}, {confirm_giveup, CurrentState}, #state{game = Game} = State) ->
@@ -125,10 +125,10 @@ handle_event({call, From}, {yes}, {confirm_giveup, CurrentState}, #state{game = 
     {NextState, NextAssignment} = get_next_assignment(CurrentState, Game),
     {next_state, NextState, State2, [{reply, From, [{text, <<"Nevadi, jedeme dal...">>}] ++ NextAssignment}]};
 
-handle_event({call, From}, {no}, {confirm_giveup, StateToGo}, #state{game = Game} = State) ->
+handle_event({call, From}, {no}, {confirm_giveup, StateToGo}, State) ->
     {next_state, StateToGo, State, [{reply, From, <<"tak se mi libis, jen verim, ze to das">>}]};
 
-handle_event({call, From}, Event, finish, #state{} = State) ->
+handle_event({call, From}, _Event, finish, #state{} = State) ->
     State2 = log(finish, finish, State),
     {keep_state, State2, [{reply, From, <<"uz jsi v cili">>}]};
 handle_event({call, From}, {hello}, CurrentState, #state{game = Game} = State) ->
@@ -146,28 +146,28 @@ handle_event({call, From}, Content, StateName, State) ->
 
 get_assignment(finish, #game{}) ->
     [{text, <<"gratulujeme k absolvovani hry">>}];
-get_assignment({move, MoveName}, #game{moves = Moves} = Game) ->
+get_assignment({move, MoveName}, #game{moves = Moves}) ->
     #{MoveName := #task{assignment = Assignment}} = Moves,
     Assignment;
-get_assignment({puzzle, PuzzleName}, #game{puzzles = Puzzles} = Game) ->
+get_assignment({puzzle, PuzzleName}, #game{puzzles = Puzzles}) ->
     #{PuzzleName := #task{assignment = Assignment}} = Puzzles,
     Assignment.
 
-get_answer({move, MoveName}, #game{moves = Moves} = Game) ->
+get_answer({move, MoveName}, #game{moves = Moves}) ->
     #{MoveName := #task{answer = Answer}} = Moves,
     Answer;
-get_answer({puzzle, PuzzleName}, #game{puzzles = Puzzles} = Game) ->
+get_answer({puzzle, PuzzleName}, #game{puzzles = Puzzles}) ->
     #{PuzzleName := #task{answer = Answer}} = Puzzles,
     Answer.
 
-get_next_state({move, MoveName}, #game{moves = Moves} = Game) ->
+get_next_state({move, MoveName}, #game{moves = Moves}) ->
     #{MoveName := #task{next_state = NextState}} = Moves,
     NextState;
-get_next_state({puzzle, PuzzleName}, #game{puzzles = Puzzles} = Game) ->
+get_next_state({puzzle, PuzzleName}, #game{puzzles = Puzzles}) ->
     #{PuzzleName := #task{next_state = NextState}} = Puzzles,
     NextState.
 
-get_hint({puzzle, PuzzleName}, #game{puzzles = Puzzles} = Game) ->
+get_hint({puzzle, PuzzleName}, #game{puzzles = Puzzles}) ->
     #{PuzzleName := #task{hint = Hint}} = Puzzles,
     Hint.
 
@@ -185,12 +185,12 @@ log(Event, StateName, #state{game_log = Log, time0 = Time0} = State) ->
     EventTime = erlang:monotonic_time() - Time0,
     State#state{game_log = [{EventTime, Event, StateName} | Log]}.
 
-hint_used(CurrentState, #state{game_log = GameLog} = State) ->
+hint_used(CurrentState, #state{game_log = GameLog}) ->
     length(lists:filter(fun({_, hint, CS}) when CS =:= CurrentState -> true;
                            (_) -> false end,
                         GameLog)) > 0.
 
-score(#state{game_log = GameLog} = State) ->
+score(#state{game_log = GameLog}) ->
     PuzzleOKs = [PuzzleState || {_, puzzle_answer_ok, PuzzleState} <- GameLog],
     io:format("PuzzleOKs: ~p~n", [PuzzleOKs]),
     HintsUsed = [PuzzleState || {_, hint, PuzzleState} <- GameLog],

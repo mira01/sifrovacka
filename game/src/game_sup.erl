@@ -32,10 +32,7 @@ start_link() ->
 %% Child :: {Id,StartFunc,Restart,Shutdown,Type,Modules}
 init([]) ->
     {ok, {{one_for_all, 1, 1},[
-                               #{id => game_yaws_sup
-                                ,start => {game_yaws_sup, start_link, []}
-                                }
-                              ,#{id => game_session_sup
+                              #{id => game_session_sup
                                 ,start => {game_session_sup, start_link, [
                                       {<<"cibulka">>, <<"/definitions/cibulka_game/definition.json">>}
                                     ]}

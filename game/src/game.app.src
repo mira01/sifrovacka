@@ -12,15 +12,11 @@
   {modules, [
         game_app,
         game_commands,
-        game_event_parser,
         game_fsm,
         game_records,
         game_session,
         game_session_sup,
-        game_sup,
-        game_webhook,
-        game_yaws,
-        game_yaws_sup
+        game_sup
   ]},
 
   {maintainers, []},
