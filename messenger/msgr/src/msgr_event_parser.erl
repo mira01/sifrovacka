@@ -1,7 +1,7 @@
--module(game_event_parser).
+-module(msgr_event_parser).
 
 -export([parse_event/1]).
--include("game.hrl").
+-include("messages.hrl").
 
 parse_event(Payload) ->
     Json = jiffy:decode(Payload, [return_maps]),

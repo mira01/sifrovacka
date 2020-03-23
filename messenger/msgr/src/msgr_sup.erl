@@ -32,8 +32,8 @@ start_link() ->
 %% Child :: {Id,StartFunc,Restart,Shutdown,Type,Modules}
 init([]) ->
     {ok, {{one_for_all, 1, 1}, [
-                                #{id => game_yaws_sup
-                                 ,start => {game_yaws_sup, start_link, []}
+                                #{id => msgr_yaws_sup
+                                 ,start => {msgr_yaws_sup, start_link, []}
                                  }
                                ]}}.
 

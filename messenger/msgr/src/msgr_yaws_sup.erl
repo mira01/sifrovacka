@@ -1,4 +1,4 @@
--module(game_yaws_sup).
+-module(msgr_yaws_sup).
 -behaviour(supervisor).
 
 %% API
@@ -11,6 +11,6 @@ start_link() ->
     supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 
 init([]) ->
-    YBed = {game_yaws, {game_yaws,start,[]},
-            temporary,2000,worker,[game_yaws]},
+    YBed = {msgr_yaws, {msgr_yaws,start,[]},
+            temporary,2000,worker,[msgr_yaws]},
     {ok,{{one_for_all,0,1}, [YBed]}}.

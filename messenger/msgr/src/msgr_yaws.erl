@@ -1,5 +1,6 @@
--module(game_yaws).
--compile(export_all).
+-module(msgr_yaws).
+
+-export([start/0, run/0]).
 
 start() ->
     {ok, spawn_link(?MODULE, run, [])}.
@@ -12,10 +13,10 @@ run() ->
                  {servername, "foobar"},
                  {listen, {0,0,0,0}},
                  {docroot, Docroot},
-                 {appmods, [{"/", game_webhook}]}
+                 {appmods, [{"/", msgr_webhook}]}
                 ],
     {ok, SCList, GC, ChildSpecs} =
         yaws_api:embedded_start_conf(Docroot, SconfList, GconfList, Id),
-    [supervisor:start_child(game_yaws_sup, Ch) || Ch <- ChildSpecs],
+    [supervisor:start_child(msgr_yaws_sup, Ch) || Ch <- ChildSpecs],
     yaws_api:setconf(GC, SCList),
     exit(normal).
