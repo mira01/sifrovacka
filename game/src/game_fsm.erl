@@ -53,21 +53,20 @@ handle_event({call, From}, {yes}, {confirm_hint, StateToGo}, #state{game = Game}
     {next_state, StateToGo, State2, [{reply, From, Hint}]};
 
 handle_event({call, From}, {no}, {confirm_hint, StateToGo}, State) ->
-    {next_state, StateToGo, State, [{reply, From, <<"tak se mi libis, jen verim, ze to das">>}]};
+    {next_state, StateToGo, State, [{reply, From, [{text, <<"tak se mi libis, ja verim, ze to das">>}]}]};
 
 handle_event({call, From}, _, {confirm_hint, StateToGo}, State) ->
-    {next_state, StateToGo, State, [{reply, From, <<"nerekl jsi, zda napovedu chces, nebo ne, takze jsem ti ji neposlal.
-    pokud ji budes chtit, tak napis 'napoveda' a pak potvrd">>}]};
+    {next_state, StateToGo, State, [{reply, From, [{text, <<"nerekl jsi, zda napovedu chces, nebo ne, takze jsem ti ji neposlal.
+    pokud ji budes chtit, tak napis 'napoveda' a pak potvrd">>}]}]};
 
 handle_event({call, From}, {help}, _, #state{} = State) ->
-    {keep_state, State, [{reply, From, game_commands:help()}]};
+    {keep_state, State, [{reply, From, [{text, game_commands:help()}]}]};
 handle_event({call, From}, {score}, _, #state{time0 = StartTime, game_log = GameLog} = State) ->
     DurationSec = erlang:convert_time_unit(erlang:monotonic_time() - StartTime, native, second),
     {Minutes, Seconds} = minutes_seconds(DurationSec),
     Points = score(State),
     {keep_state, State, [{reply, From, [
-        {text, io_lib:format("mas ~p bodu a hrajes ~p minut a ~p vterin", [Points, Minutes, Seconds])}
-        , {term, GameLog}
+        {text, list_to_binary(io_lib:format("mas ~p bodu a hrajes ~p minut a ~p vterin", [Points, Minutes, Seconds]))}
                                        ]}]};
 
 
@@ -87,7 +86,7 @@ handle_event({call, From}, {guess, Guess}, {move, _MoveName} = CurrentState, #st
             {next_state, NextState, State2, [{reply, From, [{text, <<"move ok: to bylo dobre">>}] ++ NextAssignment}]};
         false ->
             State2 = log({move_answer_wrong, Guess}, CurrentState, State),
-            {keep_state, State2, [{reply, From, <<"jeste tam nejsi">>}]}
+            {keep_state, State2, [{reply, From, [{text, <<"jeste tam nejsi">>}]}]}
     end;
 
 handle_event({call, From}, {guess, Guess}, {puzzle, _PuzzleName} = CurrentState, #state{game = Game} = State) ->
@@ -96,10 +95,11 @@ handle_event({call, From}, {guess, Guess}, {puzzle, _PuzzleName} = CurrentState,
         true ->
             {NextState, NextAssignment} = get_next_assignment(CurrentState, Game),
             State2 = log(puzzle_answer_ok, CurrentState, State),
-            {next_state, NextState, State2, [{reply, From, [<<"puzzle ok: to bylo dobre">>] ++ NextAssignment}]};
+            R = [{text, <<"puzzle ok: to bylo dobre">>} | NextAssignment],
+            {next_state, NextState, State2, [{reply, From, R}]};
         false ->
             State2 = log({puzzle_answer_wrong, Guess}, CurrentState, State),
-            {keep_state, State2, [{reply, From, <<"to bylo spatne">>}]}
+            {keep_state, State2, [{reply, From, [{text, <<"to bylo spatne">>}]}]}
     end;
 
 handle_event({call, From}, {hint}, {puzzle, _PuzzleName} = CurrentState, #state{game = Game} = State) ->
@@ -112,25 +112,26 @@ handle_event({call, From}, {hint}, {puzzle, _PuzzleName} = CurrentState, #state{
     end;
 
 handle_event({call, From}, {hint}, _CurrentState, State) ->
-    {keep_state, State, [{reply, From, {text,<<"Napovedy mame jen pro sifry">>}}]};
+    {keep_state, State, [{reply, From, [{text,<<"Napovedy mame jen pro sifry">>}]}]};
 
 handle_event({call, From}, {give_up}, {puzzle, _PuzzleName} = CurrentState, State) ->
-    {next_state, {confirm_giveup, CurrentState}, State, [{reply, From, {question,<<"Opravdu chces vzdat tento ukol a jit na dalsi?">>}}]};
+    {next_state, {confirm_giveup, CurrentState}, State, [{reply, From, [{question,<<"Opravdu chces vzdat tento ukol a jit na dalsi?">>}]}]};
 
 handle_event({call, From}, {give_up}, _CurrentState, State) ->
-    {keep_state, State, [{reply, From, {text,<<"tohle se vzdat neda....">>}}]};
+    {keep_state, State, [{reply, From, [{text,<<"tohle se vzdat neda....">>}]}]};
 
 handle_event({call, From}, {yes}, {confirm_giveup, CurrentState}, #state{game = Game} = State) ->
     State2 = log(giveup, CurrentState, State),
     {NextState, NextAssignment} = get_next_assignment(CurrentState, Game),
-    {next_state, NextState, State2, [{reply, From, [{text, <<"Nevadi, jedeme dal...">>}] ++ NextAssignment}]};
+    R = [{text, <<"Nevadi, jedeme dal...">>} | NextAssignment],
+    {next_state, NextState, State2, [{reply, From, R}]};
 
 handle_event({call, From}, {no}, {confirm_giveup, StateToGo}, State) ->
-    {next_state, StateToGo, State, [{reply, From, <<"tak se mi libis, jen verim, ze to das">>}]};
+    {next_state, StateToGo, State, [{reply, From, [{text, <<"tak se mi libis, jen verim, ze to das">>}]}]};
 
 handle_event({call, From}, _Event, finish, #state{} = State) ->
     State2 = log(finish, finish, State),
-    {keep_state, State2, [{reply, From, <<"uz jsi v cili">>}]};
+    {keep_state, State2, [{reply, From, [{text, <<"uz jsi v cili">>}]}]};
 handle_event({call, From}, {hello}, CurrentState, #state{game = Game} = State) ->
     Assignment = get_assignment(CurrentState, Game),
     {keep_state, State, [{reply, From, [{text, <<"vitej">>},{text, game_commands:help()} ] ++ Assignment }]};
