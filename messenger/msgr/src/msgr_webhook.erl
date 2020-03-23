@@ -25,9 +25,11 @@ out(#arg{req = _Req, clidata = Clidata, querydata = _Q}) ->
      {content, "text/plain", io_lib:format("~p~n", [Resp])}].
 
 process_event(#event{
-                 recipient = _PageId, sender = Sender, content = Content,
+                 recipient = PageId, sender = Sender, content = Content,
                  type = _Type, timestamp = _Timestamp
                 }) ->
     {ok, SessionHolder} = game_session_sup:sessions(<<"cibulka">>),
+    {ok, SenderPid} = msgr_sender_sup:sender(PageId),
     Session = game_session:get_session(SessionHolder, Sender),
-    _Responses = game_fsm:send_event(Session, Content).
+    Responses = game_fsm:send_event(Session, Content),
+    lists:foreach(fun(R) -> msgr:send(SenderPid, Sender, R) end, Responses).
