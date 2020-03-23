@@ -52,6 +52,8 @@ response(Recipient, Message) ->
       <<"message">> => message(Message)
      }.
 
+message({question, Text}) when is_binary(Text) ->
+    #{<<"text">> => Text};
 message({text, Text}) when is_binary(Text) ->
     #{<<"text">> => Text}.
 

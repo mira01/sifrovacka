@@ -35,6 +35,10 @@ init([]) ->
                                 #{id => msgr_yaws_sup
                                  ,start => {msgr_yaws_sup, start_link, []}
                                  }
+                                ,
+                                #{id => msgr_sender_sup
+                                 ,start => {msgr_sender_sup, start_link, []}
+                                 }
                                ]}}.
 
 %%====================================================================
