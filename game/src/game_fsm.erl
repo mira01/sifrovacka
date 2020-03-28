@@ -108,7 +108,7 @@ handle_event({call, From}, {hint}, {puzzle, _PuzzleName} = CurrentState, #state{
             Hint = get_hint(CurrentState, Game),
             {keep_state, State, [{reply, From, [{text, <<"o napovedu uz sis zadal, bylo to:">>} | Hint]}]};
         false ->
-            {next_state, {confirm_hint, CurrentState}, State, [{reply, From, {question,<<"Opravdu chces vyuzit napovedu?">>}}]}
+            {next_state, {confirm_hint, CurrentState}, State, [{reply, From, [{question,<<"Opravdu chces vyuzit napovedu?">>}]}]}
     end;
 
 handle_event({call, From}, {hint}, _CurrentState, State) ->
