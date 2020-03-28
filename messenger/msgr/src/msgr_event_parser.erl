@@ -21,5 +21,16 @@ parse_message(#{
            timestamp = Timestamp,
            sender = Sender,
            recipient = PageId,
-           content = Text}.
+           content = Text};
+
+parse_message(#{
+                <<"sender">> := #{<<"id">> := Sender},
+                <<"recipient">> := #{<<"id">> := PageId},
+                <<"timestamp">> := Timestamp
+                }) ->
+    #event{type = unknown_message,
+           timestamp = Timestamp,
+           sender = Sender,
+           recipient = PageId
+           }.
 

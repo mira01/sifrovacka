@@ -26,6 +26,13 @@ out(#arg{req = _Req, clidata = Clidata, querydata = _Q}) ->
 
 process_event(#event{
                  recipient = PageId, sender = Sender, content = Content,
+                 type = unknown_message, timestamp = _Timestamp
+                }) ->
+    {ok, SenderPid} = msgr_sender_sup:sender(PageId),
+    msgr:send(SenderPid, Sender, {text, <<"tenhle typ zpravy neumime">>});
+
+process_event(#event{
+                 recipient = PageId, sender = Sender, content = Content,
                  type = _Type, timestamp = _Timestamp
                 }) ->
     {ok, SessionHolder} = game_session_sup:sessions(<<"cibulka">>),
