@@ -50,6 +50,9 @@ send_sync(Recipient, Message, Context) ->
     io:format("Request body: ~s~n", [Request#request.body]),
     send_request(Request#request{url = Url}).
 
+build_url(#state{endpoint = Endpoint, access_token = AccessToken}) ->
+    Endpoint ++ "?access_token=" ++ AccessToken.
+
 send_request(#request{
                 method = Method,
                 url = Url,
@@ -60,23 +63,6 @@ send_request(#request{
                 client_options = ClientOptions
                }) ->
     httpc:request(Method, {Url, Headers, ContentType, Body}, HttpOptions, [{sync, true} | ClientOptions]).
-
-build_url(#state{endpoint = Endpoint, access_token = AccessToken}) ->
-    Endpoint ++ "?access_token=" ++ AccessToken.
-
-file_metadata({Type, BinPath}) ->
-    Path = binary_to_list(BinPath),
-    Filename = filename:basename(Path),
-    [$. | Extension] = filename:extension(Filename),
-    Mime = mime(Type, string:lowercase(Extension)),
-    {Filename, Mime}.
-
-mime(image, "jpg") ->
-    mime(image, "jpeg");
-mime(Type, Extension) ->
-    LowerExtension = string:lowercase(Extension),
-    StartBoundary = erlang:iolist_to_binary([atom_to_list(Type), "/", LowerExtension]).
-
 
 build_request(Recipient, {text, Text}) ->
     #request{
@@ -126,6 +112,19 @@ build_request(Recipient, {Asset, Path} = Message) when is_atom(Asset) ->
         body = Body,
         client_options = [{body_format, binary}]
     }.
+
+file_metadata({Type, BinPath}) ->
+    Path = binary_to_list(BinPath),
+    Filename = filename:basename(Path),
+    [$. | Extension] = filename:extension(Filename),
+    Mime = mime(Type, string:lowercase(Extension)),
+    {Filename, Mime}.
+
+mime(image, "jpg") ->
+    mime(image, "jpeg");
+mime(Type, Extension) ->
+    LowerExtension = string:lowercase(Extension),
+    StartBoundary = erlang:iolist_to_binary([atom_to_list(Type), "/", LowerExtension]).
 
 format_multipart(TextData, BinaryData, Boundary) ->
     StartBoundary = erlang:iolist_to_binary([<<"--">>, Boundary]),
