@@ -11,6 +11,4 @@ start_link() ->
     supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 
 init([]) ->
-    YBed = {msgr_yaws, {msgr_yaws,start,[]},
-            temporary,2000,worker,[msgr_yaws]},
-    {ok,{{one_for_all,0,1}, [YBed]}}.
+    {ok, {{one_for_one, 1, 1}, [ ]}}.
