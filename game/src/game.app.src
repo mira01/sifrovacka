@@ -1,5 +1,5 @@
 {application, game,
- [{description, "An OTP application"},
+ [{description, "A framework for fsm-like games."},
   {vsn, "0.1.0"},
   {registered, []},
   {mod, {game_app, []}},
