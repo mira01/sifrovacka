@@ -1,0 +1,726 @@
+
+=INFO REPORT==== 22-Mar-2020::16:43:30 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://foobar:8888 under /tmp
+
+=ERROR REPORT==== 22-Mar-2020::16:43:33 ===
+
+
+ERROR erlang code threw an uncaught exception:
+ File: appmod:0
+Class: error
+Exception: function_clause
+Req: {http_request,'GET',{abs_path,"/"},{1,1}}
+Stack: [{proplists,get_value,
+                   ["hub.mode",{error,missing_value,undefined},undefined],
+                   [{file,"proplists.erl"},{line,215}]},
+        {msgr_webhook,out,1,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,9}]},
+        {yaws_server,deliver_dyn_part,8,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,2921}]},
+        {yaws_server,aloop,4,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1274}]},
+        {yaws_server,acceptor0,2,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1073}]},
+        {proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]
+
+=ERROR REPORT==== 22-Mar-2020::16:43:33 ===
+
+
+ERROR erlang code threw an uncaught exception:
+ File: appmod:0
+Class: error
+Exception: function_clause
+Req: {http_request,'GET',{abs_path,"/favicon.ico"},{1,1}}
+Stack: [{proplists,get_value,
+                   ["hub.mode",{error,missing_value,undefined},undefined],
+                   [{file,"proplists.erl"},{line,215}]},
+        {msgr_webhook,out,1,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,9}]},
+        {yaws_server,deliver_dyn_part,8,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,2921}]},
+        {yaws_server,aloop,4,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1274}]},
+        {yaws_server,acceptor0,2,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1073}]},
+        {proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]
+
+=ERROR REPORT==== 22-Mar-2020::16:43:34 ===
+
+
+ERROR erlang code threw an uncaught exception:
+ File: appmod:0
+Class: error
+Exception: function_clause
+Req: {http_request,'GET',{abs_path,"/"},{1,1}}
+Stack: [{proplists,get_value,
+                   ["hub.mode",{error,missing_value,undefined},undefined],
+                   [{file,"proplists.erl"},{line,215}]},
+        {msgr_webhook,out,1,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,9}]},
+        {yaws_server,deliver_dyn_part,8,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,2921}]},
+        {yaws_server,aloop,4,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1274}]},
+        {yaws_server,acceptor0,2,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1073}]},
+        {proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]
+
+=ERROR REPORT==== 22-Mar-2020::16:43:34 ===
+
+
+ERROR erlang code threw an uncaught exception:
+ File: appmod:0
+Class: error
+Exception: function_clause
+Req: {http_request,'GET',{abs_path,"/favicon.ico"},{1,1}}
+Stack: [{proplists,get_value,
+                   ["hub.mode",{error,missing_value,undefined},undefined],
+                   [{file,"proplists.erl"},{line,215}]},
+        {msgr_webhook,out,1,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,9}]},
+        {yaws_server,deliver_dyn_part,8,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,2921}]},
+        {yaws_server,aloop,4,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1274}]},
+        {yaws_server,acceptor0,2,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1073}]},
+        {proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]
+
+=INFO REPORT==== 22-Mar-2020::17:43:42 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://foobar:8888 under /tmp
+
+=INFO REPORT==== 22-Mar-2020::17:47:26 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://foobar:8888 under /tmp
+
+=ERROR REPORT==== 22-Mar-2020::17:50:47 ===
+
+
+ERROR erlang code threw an uncaught exception:
+ File: appmod:0
+Class: exit
+Exception: {noproc,{gen_server,call,
+                               [msgr_sender_sup,which_children,infinity]}}
+Req: {http_request,'POST',{abs_path,"/"},{1,1}}
+Stack: [{gen_server,call,3,[{file,"gen_server.erl"},{line,223}]},
+        {msgr_sender_sup,sender,1,
+                         [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_sender_sup.erl"},
+                          {line,26}]},
+        {msgr_webhook,process_event,1,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,32}]},
+        {msgr_webhook,'-out/1-fun-0-',2,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,20}]},
+        {lists,foldl,3,[{file,"lists.erl"},{line,1263}]},
+        {msgr_webhook,out,1,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,19}]},
+        {yaws_server,deliver_dyn_part,8,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,2921}]},
+        {yaws_server,aloop,4,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1274}]}]
+
+=INFO REPORT==== 22-Mar-2020::17:52:20 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://foobar:8888 under /tmp
+
+=INFO REPORT==== 22-Mar-2020::17:53:52 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://foobar:8888 under /tmp
+
+=INFO REPORT==== 22-Mar-2020::17:56:16 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://foobar:8888 under /tmp
+
+=INFO REPORT==== 22-Mar-2020::17:57:32 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://foobar:8888 under /tmp
+
+=INFO REPORT==== 22-Mar-2020::17:57:43 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://foobar:8888 under /tmp
+
+=INFO REPORT==== 22-Mar-2020::17:58:54 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://foobar:8888 under /tmp
+
+=ERROR REPORT==== 22-Mar-2020::17:59:10 ===
+
+
+ERROR erlang code threw an uncaught exception:
+ File: appmod:0
+Class: error
+Exception: {badmatch,undefined}
+Req: {http_request,'POST',{abs_path,"/"},{1,1}}
+Stack: [{msgr_webhook,process_event,1,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,32}]},
+        {msgr_webhook,'-out/1-fun-0-',2,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,20}]},
+        {lists,foldl,3,[{file,"lists.erl"},{line,1263}]},
+        {msgr_webhook,out,1,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,19}]},
+        {yaws_server,deliver_dyn_part,8,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,2921}]},
+        {yaws_server,aloop,4,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1274}]},
+        {yaws_server,acceptor0,2,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1073}]},
+        {proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]
+
+=INFO REPORT==== 22-Mar-2020::18:02:23 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://foobar:8888 under /tmp
+
+=ERROR REPORT==== 22-Mar-2020::18:02:26 ===
+
+
+ERROR erlang code threw an uncaught exception:
+ File: appmod:0
+Class: error
+Exception: {329,invalid_json}
+Req: {http_request,'POST',{abs_path,"/"},{1,1}}
+Stack: [{jiffy,decode,2,
+               [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/jiffy/src/jiffy.erl"},
+                {line,71}]},
+        {msgr_event_parser,parse_event,1,
+                           [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_event_parser.erl"},
+                            {line,7}]},
+        {msgr_webhook,out,1,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,18}]},
+        {yaws_server,deliver_dyn_part,8,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,2921}]},
+        {yaws_server,aloop,4,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1274}]},
+        {yaws_server,acceptor0,2,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1073}]},
+        {proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]
+
+=INFO REPORT==== 24-Mar-2020::21:33:30 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://foobar:8888 under /tmp
+
+=INFO REPORT==== 27-Mar-2020::19:03:39 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://foobar:8888 under /tmp
+
+=INFO REPORT==== 27-Mar-2020::20:39:52 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://foobar:8888 under /tmp
+
+=INFO REPORT==== 27-Mar-2020::20:46:37 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://foobar:8888 under /tmp
+
+=INFO REPORT==== 27-Mar-2020::20:53:36 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://foobar:8888 under /tmp
+
+=INFO REPORT==== 28-Mar-2020::10:50:11 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://foobar:8888 under /tmp
+
+=INFO REPORT==== 28-Mar-2020::10:51:29 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://foobar:8888 under /tmp
+
+=ERROR REPORT==== 28-Mar-2020::10:57:15 ===
+** Generic server <0.200.0> terminating 
+** Last message in was {get_session,<0.244.0>}
+** When Server state == {state,<<"cibulka">>,
+                               <<"/definitions/cibulka_game/definition.json">>,
+                               {dict,0,16,16,8,80,48,
+                                     {[],[],[],[],[],[],[],[],[],[],[],[],[],
+                                      [],[],[]},
+                                     {{[],[],[],[],[],[],[],[],[],[],[],[],[],
+                                       [],[],[]}}}}
+** Reason for termination == 
+** {{badmatch,{error,enoent}},
+    [{game_fsm,start_link,1,
+               [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/game/src/game_fsm.erl"},
+                {line,31}]},
+     {game_session,handle_call,3,
+                   [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/game/src/game_session.erl"},
+                    {line,33}]},
+     {gen_server,try_handle_call,4,[{file,"gen_server.erl"},{line,661}]},
+     {gen_server,handle_msg,6,[{file,"gen_server.erl"},{line,690}]},
+     {proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]}
+** Client <0.242.0> stacktrace
+** [{gen,do_call,4,[{file,"gen.erl"},{line,169}]},
+    {gen_server,call,2,[{file,"gen_server.erl"},{line,211}]},
+    {erl_eval,do_apply,6,[{file,"erl_eval.erl"},{line,684}]},
+    {erl_eval,expr,5,[{file,"erl_eval.erl"},{line,449}]},
+    {shell,exprs,7,[{file,"shell.erl"},{line,686}]},
+    {shell,eval_exprs,7,[{file,"shell.erl"},{line,642}]},
+    {shell,eval_loop,3,[{file,"shell.erl"},{line,627}]}]
+
+=INFO REPORT==== 28-Mar-2020::10:58:22 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://foobar:8888 under /tmp
+
+=ERROR REPORT==== 28-Mar-2020::11:01:19 ===
+** Generic server <0.245.0> terminating 
+** Last message in was {send,<<"2678643578911292">>,{image,"/tmp/pokus.jpg"}}
+** When Server state == {state,"EAAGp7kKPZBm0BADujuqeVXzjndeQyNSrXrytOk0qxL4PcUAv704zQkOhKAu5VdbNdqAYjZC77iNnMbcGrfMDGQZCDwJnKo8Hbw7do2F7yDEdLMEJHLko604sgpEcaxENJT0zsaS0KLSiVNIY9gucw9pGUhKOQ2iRggN2ZCYPkoJVajcnlAva",
+                               "https://graph.facebook.com/v2.6/me/messages"}
+** Reason for termination == 
+** {badarg,[{msgr,build_request,2,
+                  [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr.erl"},
+                   {line,74}]},
+            {msgr,send_sync,3,
+                  [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr.erl"},
+                   {line,48}]},
+            {msgr,handle_call,3,
+                  [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr.erl"},
+                   {line,34}]},
+            {gen_server,try_handle_call,4,
+                        [{file,"gen_server.erl"},{line,661}]},
+            {gen_server,handle_msg,6,[{file,"gen_server.erl"},{line,690}]},
+            {proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]}
+** Client <0.192.0> stacktrace
+** [{gen,do_call,4,[{file,"gen.erl"},{line,169}]},
+    {gen_server,call,2,[{file,"gen_server.erl"},{line,211}]},
+    {erl_eval,do_apply,6,[{file,"erl_eval.erl"},{line,684}]},
+    {shell,exprs,7,[{file,"shell.erl"},{line,686}]},
+    {shell,eval_exprs,7,[{file,"shell.erl"},{line,642}]},
+    {shell,eval_loop,3,[{file,"shell.erl"},{line,627}]}]
+
+=INFO REPORT==== 28-Mar-2020::11:03:21 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://foobar:8888 under /tmp
+
+=INFO REPORT==== 28-Mar-2020::11:05:10 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://foobar:8888 under /tmp
+
+=INFO REPORT==== 28-Mar-2020::11:06:26 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://foobar:8888 under /tmp
+
+=INFO REPORT==== 4-Apr-2020::14:52:59 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://localhost:8888 under /tmp
+
+=INFO REPORT==== 4-Apr-2020::14:52:59 ===
+    application: sifrovacka_release
+    exited: {{shutdown,{failed_to_start_child,starter,ok}},
+             {sifrovacka_release_app,start,[normal,[]]}}
+    type: temporary
+
+=INFO REPORT==== 4-Apr-2020::14:52:59 ===
+stop_ready([], <0.233.0>)
+
+=INFO REPORT==== 4-Apr-2020::14:56:59 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://localhost:8888 under /tmp
+
+=ERROR REPORT==== 4-Apr-2020::14:57:18 ===
+
+
+ERROR erlang code threw an uncaught exception:
+ File: appmod:0
+Class: error
+Exception: {badmatch,none}
+Req: {http_request,'GET',{abs_path,"/"},{1,1}}
+Stack: [{msgr_webhook,out,1,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,8}]},
+        {yaws_server,deliver_dyn_part,8,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,2921}]},
+        {yaws_server,aloop,4,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1274}]},
+        {yaws_server,acceptor0,2,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1073}]},
+        {proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]
+
+=ERROR REPORT==== 4-Apr-2020::14:57:18 ===
+
+
+ERROR erlang code threw an uncaught exception:
+ File: appmod:0
+Class: error
+Exception: {badmatch,none}
+Req: {http_request,'GET',{abs_path,"/favicon.ico"},{1,1}}
+Stack: [{msgr_webhook,out,1,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,8}]},
+        {yaws_server,deliver_dyn_part,8,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,2921}]},
+        {yaws_server,aloop,4,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1274}]},
+        {yaws_server,acceptor0,2,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1073}]},
+        {proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]
+
+=INFO REPORT==== 4-Apr-2020::14:57:41 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://localhost:8888 under /tmp
+
+=ERROR REPORT==== 4-Apr-2020::14:57:42 ===
+
+
+ERROR erlang code threw an uncaught exception:
+ File: appmod:0
+Class: error
+Exception: {badmatch,none}
+Req: {http_request,'GET',{abs_path,"/"},{1,1}}
+Stack: [{msgr_webhook,out,1,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,8}]},
+        {yaws_server,deliver_dyn_part,8,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,2921}]},
+        {yaws_server,aloop,4,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1274}]},
+        {yaws_server,acceptor0,2,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1073}]},
+        {proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]
+
+=ERROR REPORT==== 4-Apr-2020::14:57:42 ===
+
+
+ERROR erlang code threw an uncaught exception:
+ File: appmod:0
+Class: error
+Exception: {badmatch,none}
+Req: {http_request,'GET',{abs_path,"/favicon.ico"},{1,1}}
+Stack: [{msgr_webhook,out,1,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,8}]},
+        {yaws_server,deliver_dyn_part,8,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,2921}]},
+        {yaws_server,aloop,4,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1274}]},
+        {yaws_server,acceptor0,2,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1073}]},
+        {proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]
+
+=ERROR REPORT==== 4-Apr-2020::14:59:01 ===
+
+
+ERROR erlang code threw an uncaught exception:
+ File: appmod:0
+Class: error
+Exception: {badmatch,none}
+Req: {http_request,'GET',{abs_path,"/"},{1,1}}
+Stack: [{msgr_webhook,out,1,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,9}]},
+        {yaws_server,deliver_dyn_part,8,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,2921}]},
+        {yaws_server,aloop,4,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1274}]},
+        {yaws_server,acceptor0,2,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1073}]},
+        {proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]
+
+=ERROR REPORT==== 4-Apr-2020::14:59:01 ===
+
+
+ERROR erlang code threw an uncaught exception:
+ File: appmod:0
+Class: error
+Exception: {badmatch,none}
+Req: {http_request,'GET',{abs_path,"/favicon.ico"},{1,1}}
+Stack: [{msgr_webhook,out,1,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,9}]},
+        {yaws_server,deliver_dyn_part,8,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,2921}]},
+        {yaws_server,aloop,4,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1274}]},
+        {yaws_server,acceptor0,2,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1073}]},
+        {proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]
+
+=INFO REPORT==== 4-Apr-2020::14:59:45 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://localhost:8888 under /tmp
+
+=ERROR REPORT==== 4-Apr-2020::14:59:51 ===
+
+
+ERROR erlang code threw an uncaught exception:
+ File: appmod:0
+Class: error
+Exception: function_clause
+Req: {http_request,'GET',{abs_path,"/"},{1,1}}
+Stack: [{proplists,get_value,
+                   ["hub.mode",{error,missing_value,undefined},undefined],
+                   [{file,"proplists.erl"},{line,215}]},
+        {msgr_webhook,out,1,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,12}]},
+        {yaws_server,deliver_dyn_part,8,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,2921}]},
+        {yaws_server,aloop,4,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1274}]},
+        {yaws_server,acceptor0,2,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1073}]},
+        {proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]
+
+=ERROR REPORT==== 4-Apr-2020::14:59:51 ===
+
+
+ERROR erlang code threw an uncaught exception:
+ File: appmod:0
+Class: error
+Exception: function_clause
+Req: {http_request,'GET',{abs_path,"/favicon.ico"},{1,1}}
+Stack: [{proplists,get_value,
+                   ["hub.mode",{error,missing_value,undefined},undefined],
+                   [{file,"proplists.erl"},{line,215}]},
+        {msgr_webhook,out,1,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,12}]},
+        {yaws_server,deliver_dyn_part,8,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,2921}]},
+        {yaws_server,aloop,4,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1274}]},
+        {yaws_server,acceptor0,2,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1073}]},
+        {proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]
+
+=INFO REPORT==== 4-Apr-2020::15:01:58 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://localhost:8888 under /tmp
+
+=ERROR REPORT==== 4-Apr-2020::15:02:00 ===
+
+
+ERROR erlang code threw an uncaught exception:
+ File: appmod:0
+Class: error
+Exception: function_clause
+Req: {http_request,'GET',{abs_path,"/"},{1,1}}
+Stack: [{proplists,get_value,
+                   ["hub.mode",{error,missing_value,undefined},undefined],
+                   [{file,"proplists.erl"},{line,215}]},
+        {msgr_webhook,out,1,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,12}]},
+        {yaws_server,deliver_dyn_part,8,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,2921}]},
+        {yaws_server,aloop,4,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1274}]},
+        {yaws_server,acceptor0,2,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1073}]},
+        {proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]
+
+=ERROR REPORT==== 4-Apr-2020::15:02:00 ===
+
+
+ERROR erlang code threw an uncaught exception:
+ File: appmod:0
+Class: error
+Exception: function_clause
+Req: {http_request,'GET',{abs_path,"/favicon.ico"},{1,1}}
+Stack: [{proplists,get_value,
+                   ["hub.mode",{error,missing_value,undefined},undefined],
+                   [{file,"proplists.erl"},{line,215}]},
+        {msgr_webhook,out,1,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,12}]},
+        {yaws_server,deliver_dyn_part,8,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,2921}]},
+        {yaws_server,aloop,4,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1274}]},
+        {yaws_server,acceptor0,2,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1073}]},
+        {proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]
+
+=ERROR REPORT==== 4-Apr-2020::15:02:31 ===
+
+
+ERROR erlang code threw an uncaught exception:
+ File: appmod:0
+Class: error
+Exception: function_clause
+Req: {http_request,'GET',{abs_path,"/"},{1,1}}
+Stack: [{proplists,get_value,
+                   ["hub.mode",{error,missing_value,undefined},undefined],
+                   [{file,"proplists.erl"},{line,215}]},
+        {msgr_webhook,out,1,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,13}]},
+        {yaws_server,deliver_dyn_part,8,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,2921}]},
+        {yaws_server,aloop,4,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1274}]},
+        {yaws_server,acceptor0,2,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1073}]},
+        {proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]
+
+=ERROR REPORT==== 4-Apr-2020::15:02:31 ===
+
+
+ERROR erlang code threw an uncaught exception:
+ File: appmod:0
+Class: error
+Exception: function_clause
+Req: {http_request,'GET',{abs_path,"/favicon.ico"},{1,1}}
+Stack: [{proplists,get_value,
+                   ["hub.mode",{error,missing_value,undefined},undefined],
+                   [{file,"proplists.erl"},{line,215}]},
+        {msgr_webhook,out,1,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,13}]},
+        {yaws_server,deliver_dyn_part,8,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,2921}]},
+        {yaws_server,aloop,4,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1274}]},
+        {yaws_server,acceptor0,2,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1073}]},
+        {proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]
+
+=ERROR REPORT==== 4-Apr-2020::15:05:44 ===
+** Generic server <0.213.0> terminating 
+** Last message in was {get_session,<<"2678643578911292">>}
+** When Server state == {state,<<"cibulka">>,
+                               <<"/definitions/cibulka_game/definition.json">>,
+                               {dict,0,16,16,8,80,48,
+                                     {[],[],[],[],[],[],[],[],[],[],[],[],[],
+                                      [],[],[]},
+                                     {{[],[],[],[],[],[],[],[],[],[],[],[],[],
+                                       [],[],[]}}}}
+** Reason for termination == 
+** {{badmatch,{error,enoent}},
+    [{game_fsm,start_link,1,
+               [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/game/src/game_fsm.erl"},
+                {line,31}]},
+     {game_session,handle_call,3,
+                   [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/game/src/game_session.erl"},
+                    {line,33}]},
+     {gen_server,try_handle_call,4,[{file,"gen_server.erl"},{line,661}]},
+     {gen_server,handle_msg,6,[{file,"gen_server.erl"},{line,690}]},
+     {proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]}
+** Client <0.313.0> stacktrace
+** [{gen,do_call,4,[{file,"gen.erl"},{line,169}]},
+    {gen_server,call,2,[{file,"gen_server.erl"},{line,211}]},
+    {starter,'-start_link/0-fun-0-',1,
+             [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/sifrovacka_release/src/starter.erl"},
+              {line,20}]},
+    {msgr_webhook,process_event,2,
+                  [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                   {line,58}]},
+    {msgr_webhook,'-out/1-fun-0-',3,
+                  [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                   {line,39}]},
+    {lists,foldl,3,[{file,"lists.erl"},{line,1263}]},
+    {msgr_webhook,out,1,
+                  [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                   {line,38}]},
+    {yaws_server,deliver_dyn_part,8,
+                 [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                  {line,2921}]}]
+
+=ERROR REPORT==== 4-Apr-2020::15:05:44 ===
+
+
+ERROR erlang code threw an uncaught exception:
+ File: appmod:0
+Class: exit
+Exception: {{{badmatch,{error,enoent}},
+             [{game_fsm,start_link,1,
+                        [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/game/src/game_fsm.erl"},
+                         {line,31}]},
+              {game_session,handle_call,3,
+                            [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/game/src/game_session.erl"},
+                             {line,33}]},
+              {gen_server,try_handle_call,4,
+                          [{file,"gen_server.erl"},{line,661}]},
+              {gen_server,handle_msg,6,[{file,"gen_server.erl"},{line,690}]},
+              {proc_lib,init_p_do_apply,3,
+                        [{file,"proc_lib.erl"},{line,249}]}]},
+            {gen_server,call,
+                        [<0.213.0>,{get_session,<<"2678643578911292">>}]}}
+Req: {http_request,'POST',{abs_path,"/"},{1,1}}
+Stack: [{gen_server,call,2,[{file,"gen_server.erl"},{line,215}]},
+        {starter,'-start_link/0-fun-0-',1,
+                 [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/sifrovacka_release/src/starter.erl"},
+                  {line,20}]},
+        {msgr_webhook,process_event,2,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,58}]},
+        {msgr_webhook,'-out/1-fun-0-',3,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,39}]},
+        {lists,foldl,3,[{file,"lists.erl"},{line,1263}]},
+        {msgr_webhook,out,1,
+                      [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/apps/msgr/src/msgr_webhook.erl"},
+                       {line,38}]},
+        {yaws_server,deliver_dyn_part,8,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,2921}]},
+        {yaws_server,aloop,4,
+                     [{file,"/Users/mira/git/sifrovacka_erlang_fsm/sifrovacka_release/_build/default/lib/yaws/src/yaws_server.erl"},
+                      {line,1274}]}]
+
+=INFO REPORT==== 4-Apr-2020::16:17:38 ===
+Yaws: Listening to 0.0.0.0:8888 for <1> virtual servers:
+ - http://localhost:8888 under /tmp

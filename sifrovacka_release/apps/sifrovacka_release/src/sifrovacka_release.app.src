@@ -1,0 +1,40 @@
+{application, sifrovacka_release,
+ [{description, "An OTP application"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {mod, {sifrovacka_release_app, []}},
+  {applications,
+   [kernel,
+    stdlib,
+    game,
+    msgr
+   ]},
+  {env,[
+
+      %% sending messages
+
+      {app_id, <<"109821290605511">>},
+      {access_token,"EAAGp7kKPZBm0BADujuqeVXzjndeQyNSrXrytOk0qxL4PcUAv704zQkOhKAu5VdbNdqAYjZC77iNnMbcGrfMDGQZCDwJnKo8Hbw7do2F7yDEdLMEJHLko604sgpEcaxENJT0zsaS0KLSiVNIY9gucw9pGUhKOQ2iRggN2ZCYPkoJVajcnlAva"},
+      {endpoint, "https://graph.facebook.com/v2.6/me/messages"},
+
+      %% receiving messages
+
+      {verify_token, "lhota_trophy"},
+      {yaws_gconf_list, [
+          {id, "embeded_yaws"}
+        ]
+      },
+      {yaws_sconf_list, [
+          {listen, {0,0,0,0}},
+          {port, 8888},
+          {docroot, "/tmp"},
+          {appmods, [{"/", msgr_webhook}]}
+        ]
+      }
+  ]},
+  {modules, []},
+
+  {maintainers, []},
+  {licenses, ["Apache 2.0"]},
+  {links, []}
+ ]}.
