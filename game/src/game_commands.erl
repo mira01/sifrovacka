@@ -1,7 +1,13 @@
+%%%-------------------------------------------------------------------
+%% @doc Provide functions for making game commands from binary strings
+%% @end
+%%%-------------------------------------------------------------------
+
 -module(game_commands).
 -export([command/1]).
 -compile([export_all]).
 
+%% @doc Process binary string and return corresponding game command
 command(Binary) when is_binary(Binary) ->
     ComparableString = string:casefold(Binary),
     Tokens = string:lexemes(ComparableString, " " ++ [$\n, $\t, $\r]),
@@ -22,6 +28,7 @@ Jsi-li zoufalý a chceš-li vzdát luštění této šifry a jít dál, napiš '
 Jsi-li jen společenský, napiš 'ahoj'.
 "/utf8>>.
 
+%% @doc Simple parser of commands. Take list of binaries (words) and return a game command
 make_command([<<"?">>]) ->
     {help};
 make_command([<<"help">>]) ->

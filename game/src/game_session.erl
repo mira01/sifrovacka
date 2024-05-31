@@ -1,3 +1,9 @@
+%%%-------------------------------------------------------------------
+%% @doc Module represents one type of game. Holds multiple players's sessions
+%%      represented as individual game_fsms.
+%%      TODO: consider making it a supervisor
+%% @end
+%%%-------------------------------------------------------------------
 -module(game_session).
 -compile([export_all]).
 -export([start_link/2, init/1, handle_call/3, handle_cast/2]).
@@ -11,7 +17,7 @@
                ,sessions
                }
        ).
-
+%% @doc start a game represented by Name and Path of game definition
 start_link(Name, Path) ->
     gen_server:start_link(?MODULE, [Name, Path], []).
 

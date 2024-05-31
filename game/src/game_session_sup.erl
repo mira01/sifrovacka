@@ -1,5 +1,6 @@
 %%%-------------------------------------------------------------------
-%% @doc supervisor of session storages
+%% @doc supervisor of session storages. Holds all the game types.
+%%      almost top-level supervisor
 %% @end
 %%%-------------------------------------------------------------------
 
@@ -23,6 +24,7 @@
 start_link(Games) ->
     supervisor:start_link({local, ?SERVER}, ?MODULE, [Games]).
 
+%% @doc find a game type by name. return process that holds game type.
 sessions(Name) ->
     Children = supervisor:which_children(?SERVER),
     sessions(Name, Children).
