@@ -65,7 +65,7 @@ handle_event({call, From}, {score}, _, #state{time0 = StartTime, game_log = Game
     {Minutes, Seconds} = minutes_seconds(DurationSec),
     Points = score(State),
     {keep_state, State, [{reply, From, [
-        {text, list_to_binary(io_lib:format("Máš ~p bodů a hraješ ~p minut a ~p vteřin", [Points, Minutes, Seconds]))}
+        {text, unicode:characters_to_binary(io_lib:format("Máš ~p bodů a hraješ ~p minut a ~p vteřin", [Points, Minutes, Seconds]))}
                                        ]}]};
 
 

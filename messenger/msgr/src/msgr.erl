@@ -124,13 +124,13 @@ mime(image, "jpg") ->
     mime(image, "jpeg");
 mime(Type, Extension) ->
     LowerExtension = string:lowercase(Extension),
-    StartBoundary = erlang:iolist_to_binary([atom_to_list(Type), "/", LowerExtension]).
+    StartBoundary = unicode:characters_to_binary([atom_to_list(Type), "/", LowerExtension]).
 
 format_multipart(TextData, BinaryData, Boundary) ->
-    StartBoundary = erlang:iolist_to_binary([<<"--">>, Boundary]),
+    StartBoundary = unicode:characters_to_binary([<<"--">>, Boundary]),
     LineSeparator = <<"\r\n">>,
     TextParts = lists:foldl(fun({Key, Value}, Acc) ->
-        erlang:iolist_to_binary([
+        unicode:characters_to_binary([
             Acc,
             StartBoundary, LineSeparator,
             <<"Content-Disposition: form-data; name=\"">>, Key, <<"\"">>, LineSeparator, LineSeparator,
@@ -138,7 +138,7 @@ format_multipart(TextData, BinaryData, Boundary) ->
         ])
     end, <<"">>, TextData),
     AllParts = lists:foldl(fun({Key, Binary, Mime, Filename}, Acc) ->
-        erlang:iolist_to_binary([
+        unicode:characters_to_binary([
             Acc,
             StartBoundary, LineSeparator,
             <<"Content-Disposition: form-data; name=\"">>, Key, <<"\"; filename=\"">>, Filename, <<"\"">>, LineSeparator,
@@ -147,4 +147,4 @@ format_multipart(TextData, BinaryData, Boundary) ->
             LineSeparator
         ])
     end, TextParts, BinaryData),
-    erlang:iolist_to_binary([AllParts, StartBoundary, <<"--">>, LineSeparator]).
+    unicode:characters_to_binary([AllParts, StartBoundary, <<"--">>, LineSeparator]).
