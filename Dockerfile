@@ -1,4 +1,4 @@
-FROM erlang:21-alpine AS sifrovacka_dependencies
+FROM erlang:22-alpine AS sifrovacka_dependencies
 
 RUN apk add --no-cache --virtual .build-deps \
         autoconf \
