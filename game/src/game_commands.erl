@@ -15,59 +15,63 @@ Můžeš psát s diakritikou i bez.
       
 Nevíš-li, jaké máš možnosti napiš '?' nebo 'pomoc'.
 Chceš-li vědět, jak jsi na tom, napiš 'stav' nebo 'jak jsem na tom'.
-Vyluštil-li ji zadání a chceš ho zadat, napiš 'odpověď CO_TI_VYŠLO' např: 'odpověď mrkev'.
+Vyluštil-li ji zadání a chceš ho zadat, napiš 'heslo CO_TI_VYŠLO' např: 'heslo mrkev'.
 Chceš-li zopakovat zadání, napiš 'zadání' nebo 'zopakuj zadání'.
 Nevíš-li si rady se zadáním a chceš-li nápovědu, napiš 'nápověda'.
 Jsi-li zoufalý a chceš-li vzdát luštění této šifry a jít dál, napiš 'řešení'.
-Jsi-li jen společenský, napiš 'ahoj'.
+Jsi-li jen společenská, napiš 'ahoj'.
 "/utf8>>.
 
-make_command([<<"?">>]) ->
+make_command([<<"?"/utf8>>]) ->
     {help};
-make_command([<<"help">>]) ->
+make_command([<<"help"/utf8>>]) ->
     {help};
-make_command([<<"pomoc">>]) ->
+make_command([<<"pomoc"/utf8>>]) ->
     {help};
 
-make_command([<<"ahoj">>]) ->
+make_command([<<"ahoj"/utf8>>]) ->
     {hello};
 
-make_command([<<"stav">>]) ->
+make_command([<<"stav"/utf8>>]) ->
     {score};
-make_command([<<"jak">>, <<"jsem">>, <<"na">>, <<"tom">>]) ->
+make_command([<<"jak"/utf8>>, <<"jsem"/utf8>>, <<"na"/utf8>>, <<"tom"/utf8>> | _]) ->
     {score};
 
-make_command([<<"odpoved">>, Guess]) ->
+make_command([<<"heslo"/utf8>>, Guess]) ->
+    {guess, Guess};
+make_command([<<"heslo"/utf8>>, <<"je"/utf8>>, Guess]) ->
+    {guess, Guess};
+make_command([<<"odpoved"/utf8>>, Guess]) ->
     {guess, Guess};
 make_command([<<"odpověď"/utf8>>, Guess]) ->
     {guess, Guess};
-make_command([<<"odpoved">>, <<"je">>, Guess]) ->
+make_command([<<"odpoved"/utf8>>, <<"je"/utf8>>, Guess]) ->
     {guess, Guess};
-make_command([<<"odpověď"/utf8>>, <<"je">>, Guess]) ->
+make_command([<<"odpověď"/utf8>>, <<"je"/utf8>>, Guess]) ->
     {guess, Guess};
 
-make_command([<<"napoveda">>]) ->
+make_command([<<"napoveda"/utf8>>]) ->
     {hint};
 make_command([<<"nápověda"/utf8>>]) ->
     {hint};
 
-make_command([<<"zadani">>]) ->
+make_command([<<"zadani"/utf8>>]) ->
     {assignment};
-make_command([<<"zopakuj">>, <<"zadani">>]) ->
+make_command([<<"zopakuj"/utf8>>, <<"zadani"/utf8>>]) ->
     {assignment};
 make_command([<<"zadání"/utf8>>]) ->
     {assignment};
-make_command([<<"zopakuj">>, <<"zadání"/utf8>>]) ->
+make_command([<<"zopakuj"/utf8>>, <<"zadání"/utf8>>]) ->
     {assignment};
 
-make_command([<<"reseni">>]) ->
+make_command([<<"reseni"/utf8>>]) ->
     {give_up};
 make_command([<<"řešení"/utf8>>]) ->
     {give_up};
 
-make_command([<<"ano">>]) ->
+make_command([<<"ano"/utf8>>]) ->
     {yes};
-make_command([<<"ne">>]) ->
+make_command([<<"ne"/utf8>>]) ->
     {no};
 
 make_command(_) ->
