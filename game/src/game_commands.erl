@@ -9,17 +9,23 @@ command(Binary) when is_binary(Binary) ->
 
 
 help() ->
-    <<"Použití:
-Příklady zde uvedené zadávej tak, jak jsou psány, tj.většinou bez tečky či otazníku na konci.
-Můžeš psát s diakritikou i bez.
+    <<"Pro komunikaci s programem používej následující pokyny:
       
-Nevíš-li, jaké máš možnosti napiš '?' nebo 'pomoc'.
-Chceš-li vědět, jak jsi na tom, napiš 'stav' nebo 'jak jsem na tom'.
-Vyluštil-li ji zadání a chceš ho zadat, napiš 'heslo CO_TI_VYŠLO' např: 'heslo mrkev'.
-Chceš-li zopakovat zadání, napiš 'zadání' nebo 'zopakuj zadání'.
-Nevíš-li si rady se zadáním a chceš-li nápovědu, napiš 'nápověda'.
-Jsi-li zoufalý a chceš-li vzdát luštění této šifry a jít dál, napiš 'řešení'.
-Jsi-li jen společenská, napiš 'ahoj'.
+'?' nebo 'pomoc' Nevíš-li, jak si se mnou povídat.
+
+'stav' Chceš-li vědět, jak jsi na tom.
+
+'heslo mrkev' Vyluštila-li jsi šifru a vyšla ti mrkev.
+
+'zadání' nebo 'zopakuj zadání' Chceš-li zopakovat zadání.
+
+'nápověda' Nevíš-li si rady se šifrou a chceš nápovědu.
+
+'ano' nebo 'ne' Pokud se tě program na něco ptá.
+
+'přeskočit' Jsi-li zoufalá a chceš vzdát luštění této šifry a jít dál.
+
+'ahoj' Jsi-li jen společenská.
 "/utf8>>.
 
 make_command([<<"?"/utf8>>]) ->
@@ -64,9 +70,13 @@ make_command([<<"zadání"/utf8>>]) ->
 make_command([<<"zopakuj"/utf8>>, <<"zadání"/utf8>>]) ->
     {assignment};
 
-make_command([<<"reseni"/utf8>>]) ->
+make_command([<<"přeskočit"/utf8>>]) ->
     {give_up};
-make_command([<<"řešení"/utf8>>]) ->
+make_command([<<"preskocit"/utf8>>]) ->
+    {give_up};
+make_command([<<"přeskoč"/utf8>>]) ->
+    {give_up};
+make_command([<<"preskoc"/utf8>>]) ->
     {give_up};
 
 make_command([<<"ano"/utf8>>]) ->

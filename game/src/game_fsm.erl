@@ -10,11 +10,9 @@
 
 -record(state, {
           game :: #game{},
-          start_state ,
-          time0,
-          game_log = [] :: [],
-          points = 0 :: integer(),
-          solved_puzzles_count = 0 :: integer()
+          time0 = undefined,
+          finish_time = undefined,
+          game_log = [] :: [any()]
          }).
 
 -define(POINTS_PUZZLE_OK, 10).
@@ -24,8 +22,10 @@
 %   game_session:get_session(SessionHolder, mirek).
 
 
-%   f(Pid), {ok, Pid, _} = game_fsm:start("../cibulka_game/definition.json").
+%   f(Pid), {ok, Pid} = game_fsm:start_link("/definitions/cibulka_game/definition.json").
 %   game_fsm:send_event(Pid, <<"napoveda"/utf8>>).
+%
+%   f(B), f(All), [{_, B} | _] = All = game_fsm:send_event(Pid, <<"ano"/utf8>>), io:format("~ts", [B]).
 
 start_link(GameSpecPath) ->
     {ok, File} = file:read_file(GameSpecPath),
@@ -42,7 +42,7 @@ send_event(Pid, Msg) ->
 % handlers
 init(#game{start = Start} = Game) ->
     io:format("Start: ~p~n", [Start]),
-    {ok, Start, #state{game = Game, time0 = erlang:monotonic_time()}}.
+    {ok, Start, #state{game = Game, time0 = undefined}}.
 
 callback_mode() ->
     handle_event_function.
@@ -60,12 +60,18 @@ handle_event({call, From}, _, {confirm_hint, StateToGo}, State) ->
 
 handle_event({call, From}, {help}, _, #state{} = State) ->
     {keep_state, State, [{reply, From, [{text, game_commands:help()}]}]};
-handle_event({call, From}, {score}, _, #state{time0 = StartTime, game_log = GameLog} = State) ->
-    DurationSec = erlang:convert_time_unit(erlang:monotonic_time() - StartTime, native, second),
-    {Minutes, Seconds} = minutes_seconds(DurationSec),
+
+handle_event({call, From}, {score}, _, #state{time0 = undefined, game_log = GameLog} = State) ->
     Points = score(State),
     {keep_state, State, [{reply, From, [
-        {text, unicode:characters_to_binary(io_lib:format("Máš ~p bodů a hraješ ~p minut a ~p vteřin", [Points, Minutes, Seconds]))}
+        {text, unicode:characters_to_binary(io_lib:format("Máš ~p bodů a čas jsme zatím nespustili", [Points]))}
+                                       ]}]};
+handle_event({call, From}, {score}, CurrentState, #state{time0 = StartTime, game_log = GameLog} = State) when CurrentState =/= finish->
+    DurationSec = erlang:convert_time_unit(erlang:monotonic_time() - StartTime, native, second),
+    {Hours, Minutes, Seconds} = hours_minutes_seconds(DurationSec),
+    Points = score(State),
+    {keep_state, State, [{reply, From, [
+        {text, unicode:characters_to_binary(io_lib:format("Máš ~p bodů a hraješ ~p hodin ~p minut a ~p vteřin", [Points, Hours, Minutes, Seconds]))}
                                        ]}]};
 
 
@@ -76,28 +82,14 @@ handle_event({call, From}, {assignment}, {puzzle, _} = CurrentState, #state{game
     Assignment = get_assignment(CurrentState, Game),
     {keep_state, State, [{reply, From, Assignment}]};
 
-handle_event({call, From}, {guess, Guess}, {move, _MoveName} = CurrentState, #state{game = Game} = State) ->
+handle_event({call, From}, {guess, Guess}, CurrentState, #state{game = Game} = State) when CurrentState =/= finish->
     Answer = get_answer(CurrentState, Game),
     case Guess =:= Answer of
         true ->
-            {NextState, NextAssignment} = get_next_assignment(CurrentState, Game),
-            State2 = log(move_answer_ok, CurrentState, State),
-            {next_state, NextState, State2, [{reply, From, [{text, <<"Skvěle!"/utf8>>}] ++ NextAssignment}]};
+            {NextState, State2, Replies} = on_correct_answer(CurrentState, State),
+            {next_state, NextState, State2, [{reply, From, Replies}]};
         false ->
-            State2 = log({move_answer_wrong, Guess}, CurrentState, State),
-            {keep_state, State2, [{reply, From, [{text, <<"To nebylo správně"/utf8>>}]}]}
-    end;
-
-handle_event({call, From}, {guess, Guess}, {puzzle, _PuzzleName} = CurrentState, #state{game = Game} = State) ->
-    Answer = get_answer(CurrentState, Game),
-    case Guess =:= Answer of
-        true ->
-            {NextState, NextAssignment} = get_next_assignment(CurrentState, Game),
-            State2 = log(puzzle_answer_ok, CurrentState, State),
-            R = [{text, <<"Výborně! Dobrá práce"/utf8>>} | NextAssignment],
-            {next_state, NextState, State2, [{reply, From, R}]};
-        false ->
-            State2 = log({puzzle_answer_wrong, Guess}, CurrentState, State),
+            State2 = log({answer_wrong, Guess}, CurrentState, State),
             {keep_state, State2, [{reply, From, [{text, <<"Bohužel toto není správně"/utf8>>}]}]}
     end;
 
@@ -122,20 +114,29 @@ handle_event({call, From}, {give_up}, _CurrentState, State) ->
 handle_event({call, From}, {yes}, {confirm_giveup, CurrentState}, #state{game = Game} = State) ->
     State2 = log(giveup, CurrentState, State),
     {NextState, NextAssignment} = get_next_assignment(CurrentState, Game),
-    R = [{text, <<"Nevadi, jedeme dal..."/utf8>>} | NextAssignment],
+    R = [{text, <<"Nevadí, jedeme dál..."/utf8>>} | NextAssignment],
     {next_state, NextState, State2, [{reply, From, R}]};
 
 handle_event({call, From}, {no}, {confirm_giveup, StateToGo}, State) ->
     {next_state, StateToGo, State, [{reply, From, [{text, <<"No už jsem se lekl. Pojď, to dáš."/utf8>>}]}]};
 
-handle_event({call, From}, _Event, finish, #state{} = State) ->
-    State2 = log(finish, finish, State),
-    {keep_state, State2, [{reply, From, [{text, <<"Už jsi v cíli. Díky za hru."/utf8>>}]}]};
-handle_event({call, From}, {hello}, CurrentState, #state{game = Game} = State) ->
-    Assignment = get_assignment(CurrentState, Game),
-    {keep_state, State, [{reply, From, [{text, <<"Vítej"/utf8>>},{text, game_commands:help()} ] ++ Assignment }]};
+handle_event({call, From}, _, {confirm_giveup, StateToGo}, State) ->
+    {next_state, StateToGo, State, [{reply, From, [{text, <<"Neřekla jsi, jestli opravdu chceš přeskočit úkol. Tak jsem raději neudělal nic"/utf8>>}]}]};
+
+handle_event({call, From}, _Event, finish, #state{time0 = StartTime, finish_time = FinishTime} = State) ->
+    DurationSec = erlang:convert_time_unit(FinishTime - StartTime, native, second),
+    {Hours, Minutes, Seconds} = hours_minutes_seconds(DurationSec),
+    Points = score(State),
+    {keep_state, State, [{reply, From, [
+        {text, unicode:characters_to_binary(io_lib:format("Došla jsi do cíle s ~p body za ~p hodin ~p minut a ~p vteřin. Velká gratulace", [Points, Hours, Minutes, Seconds]))}
+                                       ]}]};
+
+handle_event({call, From}, {hello}, CurrentState, #state{game = #game{welcome = Welcome} = Game} = State) ->
+    {keep_state, State, [{reply, From, Welcome }]};
+
 handle_event(info, clear_state, _, _) ->
     {keep_state, #state{}, []};
+
 handle_event({call, From}, Content, StateName, State) ->
     io:format("Content: ~p~n", [Content]),
     io:format("StateName: ~p~n", [StateName]),
@@ -144,8 +145,24 @@ handle_event({call, From}, Content, StateName, State) ->
 
 %% private functions
 
-get_assignment(finish, #game{}) ->
-    [{text, <<"Gratulujeme k absolvování hry"/utf8>>}];
+on_correct_answer({StateType, _StateName} = CurrentState, #state{game = Game} = State) ->
+    {NextState, NextAssignment} = get_next_assignment(CurrentState, Game),
+    State2 = log(answer_ok, CurrentState, State),
+    Replies = [{text, <<"Výborně, dobrá práce!"/utf8>>}] ++ NextAssignment,
+    {TimerJustStarted, State3} = start_timer_if_needed(CurrentState, State2),
+    Replies2 = case TimerJustStarted of
+                   true -> Replies ++ [{text, <<"A spustili jsme čas"/utf8>>}];
+                   _ -> Replies
+               end,
+    State4 = case NextState of
+                 finish -> State3#state{finish_time = erlang:monotonic_time()};
+                 _ -> State3
+             end,
+    {NextState, State4, Replies2}.
+
+
+get_assignment(finish, #game{bye = Bye}) ->
+    Bye;
 get_assignment({move, MoveName}, #game{moves = Moves}) ->
     #{MoveName := #task{assignment = Assignment}} = Moves,
     Assignment;
@@ -176,11 +193,20 @@ get_next_assignment(CurrentState, Game) ->
     Assignment = get_assignment(NextState, Game),
     {NextState, Assignment}.
 
-minutes_seconds(Seconds) ->
-    {Seconds div 60, Seconds rem 60}.
+start_timer_if_needed(CurrentState, #state{game = #game{time_starts_after = StartingState}} = State) ->
+    case CurrentState =:= StartingState of
+        true -> {true, State#state{time0 = erlang:monotonic_time()}};
+        _ -> {false, State}
+    end.
+
+hours_minutes_seconds(Seconds) ->
+    {Hours, Rem1} = {Seconds div 3600, Seconds rem 3600},
+    {Hours, Rem1 div 60, Rem1 rem 60}.
 
 %% score:
 
+log(Event, StateName, #state{game_log = Log, time0 = undefined} = State) ->
+    State#state{game_log = [{before_time_started, Event, StateName} | Log]};
 log(Event, StateName, #state{game_log = Log, time0 = Time0} = State) ->
     EventTime = erlang:monotonic_time() - Time0,
     State#state{game_log = [{EventTime, Event, StateName} | Log]}.
@@ -191,9 +217,9 @@ hint_used(CurrentState, #state{game_log = GameLog}) ->
                         GameLog)) > 0.
 
 score(#state{game_log = GameLog}) ->
-    PuzzleOKs = [PuzzleState || {_, puzzle_answer_ok, PuzzleState} <- GameLog],
+    PuzzleOKs = [PuzzleName || {_, answer_ok, {puzzle, PuzzleName}} <- GameLog],
     io:format("PuzzleOKs: ~p~n", [PuzzleOKs]),
-    HintsUsed = [PuzzleState || {_, hint, PuzzleState} <- GameLog],
+    HintsUsed = [PuzzleName || {_, hint, {_, PuzzleName}} <- GameLog],
     io:format("HintsUsed: ~p~n", [HintsUsed]),
     HintsForOKPuzzle = [PuzzleState || PuzzleState <- HintsUsed, lists:member(PuzzleState, PuzzleOKs)],
     io:format("HintsForOKPuzzle: ~p~n", [HintsForOKPuzzle]),
