@@ -1,3 +1,9 @@
+%%%-------------------------------------------------------------------
+%% @doc Main module for FSM like games. This module serves for handling 
+%%      one instance of a game that user plays
+%% @end
+%%%-------------------------------------------------------------------
+
 -module(game_fsm).
 -behaviour(gen_statem).
 -export([init/1,
@@ -15,7 +21,9 @@
           game_log = [] :: [any()]
          }).
 
+%% @doc Number of points awarded for correctly solving a puzzle
 -define(POINTS_PUZZLE_OK, 10).
+%% @doc Numbber of points awarded for taking a hint. Usually negative number
 -define(POINTS_HINT, -5).
 
 %   {ok, SessionHolder} = game_session_sup:sessions(<<"cibulka"/utf8>>).
@@ -27,26 +35,34 @@
 %
 %   f(B), f(All), [{_, B} | _] = All = game_fsm:send_event(Pid, <<"ano"/utf8>>), io:format("~ts", [B]).
 
+%% @doc start a game process, Argument is a path to file with a game definition
 start_link(GameSpecPath) ->
     {ok, File} = file:read_file(GameSpecPath),
     Json = jiffy:decode(File, [return_maps]),
     GameSpec = game_records:game_from_json(Json),
     gen_statem:start_link(?MODULE, GameSpec, []).
 
+%% @doc let the Pid process a message Msg encoded as a binary
 send_event(Pid, Msg) ->
     case game_commands:command(Msg) of
         error -> [{text, <<"Příkaz nerozpoznán, nevíš-li co a jak, napiš '?'"/utf8>>}];
         Command -> gen_statem:call(Pid, Command)
     end.
 
-% handlers
+%%%%%%%%%%%%%%
+%% handlers %%
+%%%%%%%%%%%%%%
+
+%% @doc initialize a game process with #game{} record
 init(#game{start = Start} = Game) ->
     io:format("Start: ~p~n", [Start]),
     {ok, Start, #state{game = Game, time0 = undefined}}.
 
+%% @doc gen_statem function declaring inner working callback module
 callback_mode() ->
     handle_event_function.
 
+%% @doc gen_statem event handler of a form (EventOriginator, EventContent, StateOfFsm, ProcessState)
 handle_event({call, From}, {yes}, {confirm_hint, StateToGo}, #state{game = Game} = State) ->
     Hint = get_hint(StateToGo, Game),
     State2 = log(hint, StateToGo, State),
@@ -56,7 +72,7 @@ handle_event({call, From}, {no}, {confirm_hint, StateToGo}, State) ->
     {next_state, StateToGo, State, [{reply, From, [{text, <<"Tak se mi líbíš, já věřím, že to dáš"/utf8>>}]}]};
 
 handle_event({call, From}, _, {confirm_hint, StateToGo}, State) ->
-    {next_state, StateToGo, State, [{reply, From, [{text, <<"Neřekla jsi, jestli nápovědu chceš nebo ne, tak jsem ti ji neposlal.Pokud ji budeš chtít, napiš 'nápověda' a pak 'ano'"/utf8>>}]}]};
+    {next_state, StateToGo, State, [{reply, From, [{text, <<"Neřekla jsi, jestli nápovědu chceš nebo ne, tak jsem ti ji neposlal. Pokud ji budeš chtít, napiš 'nápověda' a pak 'ano'"/utf8>>}]}]};
 
 handle_event({call, From}, {help}, _, #state{} = State) ->
     {keep_state, State, [{reply, From, [{text, game_commands:help()}]}]};
@@ -73,7 +89,6 @@ handle_event({call, From}, {score}, CurrentState, #state{time0 = StartTime, game
     {keep_state, State, [{reply, From, [
         {text, unicode:characters_to_binary(io_lib:format("Máš ~p bodů a hraješ ~p hodin ~p minut a ~p vteřin", [Points, Hours, Minutes, Seconds]))}
                                        ]}]};
-
 
 handle_event({call, From}, {assignment}, {move, _} = CurrentState, #state{game = Game} = State) ->
     Assignment = get_assignment(CurrentState, Game),
@@ -134,6 +149,16 @@ handle_event({call, From}, _Event, finish, #state{time0 = StartTime, finish_time
 handle_event({call, From}, {hello}, CurrentState, #state{game = #game{welcome = Welcome} = Game} = State) ->
     {keep_state, State, [{reply, From, Welcome }]};
 
+<<<<<<< HEAD
+handle_event({call, From}, _Event, finish, #state{} = State) ->
+    State2 = log(finish, finish, State),
+    {keep_state, State2, [{reply, From, [{text, <<"uz jsi v cili">>}]}]};
+handle_event({call, From}, {hello}, CurrentState, #state{game = Game} = State) ->
+    Assignment = get_assignment(CurrentState, Game),
+    {keep_state, State, [{reply, From, [{text, <<"vitej">>},{text, game_commands:help()} ] ++ Assignment }]};
+% internal clause
+=======
+>>>>>>> master
 handle_event(info, clear_state, _, _) ->
     {keep_state, #state{}, []};
 
@@ -143,8 +168,15 @@ handle_event({call, From}, Content, StateName, State) ->
     io:format("State: ~p~n", [State]),
     {keep_state, State, [{reply, From, [{text, <<"Tenhle příkaz teď nejde použít"/utf8>>}]}]}.
 
-%% private functions
+%%%%%%%%%%%%%%%%%%%%%%%
+%% private functions %%
+%%%%%%%%%%%%%%%%%%%%%%%
 
+<<<<<<< HEAD
+%% @doc get the assignment for current task from game definition
+get_assignment(finish, #game{}) ->
+    [{text, <<"gratulujeme k absolvovani hry">>}];
+=======
 on_correct_answer({StateType, _StateName} = CurrentState, #state{game = Game} = State) ->
     {NextState, NextAssignment} = get_next_assignment(CurrentState, Game),
     State2 = log(answer_ok, CurrentState, State),
@@ -163,6 +195,7 @@ on_correct_answer({StateType, _StateName} = CurrentState, #state{game = Game} = 
 
 get_assignment(finish, #game{bye = Bye}) ->
     Bye;
+>>>>>>> master
 get_assignment({move, MoveName}, #game{moves = Moves}) ->
     #{MoveName := #task{assignment = Assignment}} = Moves,
     Assignment;
@@ -170,6 +203,7 @@ get_assignment({puzzle, PuzzleName}, #game{puzzles = Puzzles}) ->
     #{PuzzleName := #task{assignment = Assignment}} = Puzzles,
     Assignment.
 
+%% @doc get correct answer for current task from game definition
 get_answer({move, MoveName}, #game{moves = Moves}) ->
     #{MoveName := #task{answer = Answer}} = Moves,
     Answer;
@@ -177,6 +211,7 @@ get_answer({puzzle, PuzzleName}, #game{puzzles = Puzzles}) ->
     #{PuzzleName := #task{answer = Answer}} = Puzzles,
     Answer.
 
+%% @doc get next state of game by current state
 get_next_state({move, MoveName}, #game{moves = Moves}) ->
     #{MoveName := #task{next_state = NextState}} = Moves,
     NextState;
@@ -184,15 +219,26 @@ get_next_state({puzzle, PuzzleName}, #game{puzzles = Puzzles}) ->
     #{PuzzleName := #task{next_state = NextState}} = Puzzles,
     NextState.
 
+%% @doc get hint for current puzzle
 get_hint({puzzle, PuzzleName}, #game{puzzles = Puzzles}) ->
     #{PuzzleName := #task{hint = Hint}} = Puzzles,
     Hint.
 
+%% @doc compound function called while correct answer was given. Return next state of the game and presents next assignment
 get_next_assignment(CurrentState, Game) ->
     NextState = get_next_state(CurrentState, Game),
     Assignment = get_assignment(NextState, Game),
     {NextState, Assignment}.
 
+<<<<<<< HEAD
+%% @doc given number of seconds return a tuple with {Minutes, Seconds}
+minutes_seconds(Seconds) ->
+    {Seconds div 60, Seconds rem 60}.
+
+%% score:
+
+%% @doc write the event into game log attach a relative time
+=======
 start_timer_if_needed(CurrentState, #state{game = #game{time_starts_after = StartingState}} = State) ->
     case CurrentState =:= StartingState of
         true -> {true, State#state{time0 = erlang:monotonic_time()}};
@@ -207,15 +253,18 @@ hours_minutes_seconds(Seconds) ->
 
 log(Event, StateName, #state{game_log = Log, time0 = undefined} = State) ->
     State#state{game_log = [{before_time_started, Event, StateName} | Log]};
+>>>>>>> master
 log(Event, StateName, #state{game_log = Log, time0 = Time0} = State) ->
     EventTime = erlang:monotonic_time() - Time0,
     State#state{game_log = [{EventTime, Event, StateName} | Log]}.
 
+%% @doc tell whether hint was used in current state
 hint_used(CurrentState, #state{game_log = GameLog}) ->
     length(lists:filter(fun({_, hint, CS}) when CS =:= CurrentState -> true;
                            (_) -> false end,
                         GameLog)) > 0.
 
+%% @doc compute players score in the game
 score(#state{game_log = GameLog}) ->
     PuzzleOKs = [PuzzleName || {_, answer_ok, {puzzle, PuzzleName}} <- GameLog],
     io:format("PuzzleOKs: ~p~n", [PuzzleOKs]),

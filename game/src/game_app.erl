@@ -1,5 +1,6 @@
 %%%-------------------------------------------------------------------
-%% @doc game public API
+%% @doc Game application module. Provides start and stop callbacks of
+%%      application behaviour
 %% @end
 %%%-------------------------------------------------------------------
 
