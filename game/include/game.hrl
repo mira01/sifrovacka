@@ -16,7 +16,10 @@
           name:: binary(),
           start::task_link(),
           moves::[task()],
-          puzzles::[task()]
+          puzzles::[task()],
+          welcome::messages(),
+          bye::messages(),
+          time_starts_after::task_link()
          }).
 
 -record(event, {

@@ -14,8 +14,8 @@
       %% sending messages
 
       {app_id, <<"109821290605511">>},
-      {access_token,"EAAGp7kKPZBm0BADujuqeVXzjndeQyNSrXrytOk0qxL4PcUAv704zQkOhKAu5VdbNdqAYjZC77iNnMbcGrfMDGQZCDwJnKo8Hbw7do2F7yDEdLMEJHLko604sgpEcaxENJT0zsaS0KLSiVNIY9gucw9pGUhKOQ2iRggN2ZCYPkoJVajcnlAva"},
-      {endpoint, "https://graph.facebook.com/v2.6/me/messages"},
+      {access_token,"EAAGp7kKPZBm0BOx3NJ14EZBf9KhNUu97sWl9kndUpXdZBL8oePcVN6AhZC18UOSImuxUiMILLvWsuUkxZALkCNtiYzB1H6gSCghMoCmFLIYTdSZADzqCA642hWEIan4ydZBAFxXTi4fSP1OBjRwb4wy2Ul5UJ5WcMbJg7Suz2DLZCTqU5GMESAOJDT8QOpjwK7YV"},
+      {endpoint, "https://graph.facebook.com/v2.6/109821290605511/messages"},
 
       %% receiving messages
 

@@ -11,21 +11,21 @@
 game_from_json(#{<<"title">> := Name,
                  <<"start">> := Start,
                  <<"moves">> := Moves,
-                 <<"puzzles">> := Puzzles
+                 <<"puzzles">> := Puzzles,
+                 <<"welcome">> := Welcome,
+                 <<"bye">> := Bye,
+                 <<"time_starts_after">> := TimeStartsAfter
                  } = _Json) ->
     Game = #game{name = Name,
-          start = start_from_list(Start),
+          start = next_state_from_json(Start),
           moves = moves_from_map(Moves),
-          puzzles = puzzles_from_map(Puzzles)
+          puzzles = puzzles_from_map(Puzzles),
+          welcome = messages_from_list(Welcome),
+          bye = messages_from_list(Bye),
+          time_starts_after = next_state_from_json(TimeStartsAfter)
          },
     [] = validate(Game),
     Game.
-
-%% @doc parse and get first assignment of the game.
-start_from_list([<<"move">>, MoveName | _T]) ->
-    {move, MoveName};
-start_from_list([<<"puzzle">>, PuzzleName | _T]) ->
-    {puzzle, PuzzleName}.
 
 %% @doc parse game's moves
 moves_from_map(Puzzles) ->

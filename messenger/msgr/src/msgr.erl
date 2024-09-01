@@ -23,7 +23,7 @@ start_link(AccessToken, Endpoint) ->
     gen_server:start(?MODULE, [AccessToken, Endpoint], []).
 
 send(Sender, Recipient, Message) ->
-    gen_server:call(Sender, {send, Recipient, Message}).
+    gen_server:call(Sender, {send, Recipient, Message}, 20000).
 
 %% Callbacks
 

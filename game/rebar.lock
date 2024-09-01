@@ -1,4 +1,8 @@
-[{<<"yaws">>,
+[{<<"jiffy">>,
+  {git,"https://github.com/davisp/jiffy.git",
+       {ref,"9ea1b35b6e60ba21dfd4adbd18e7916a831fd7d4"}},
+  0},
+ {<<"yaws">>,
   {git,"https://github.com/klacke/yaws.git",
        {ref,"ba6b44a67d4a60a6d5f2d0f6281b746b062ada5f"}},
   0}].
