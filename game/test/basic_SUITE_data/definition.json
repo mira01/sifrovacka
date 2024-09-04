@@ -1,0 +1,59 @@
+{
+      "title": "Eva 40"
+    , "start": {"puzzle": "s_lahvi"}
+    , "time_starts_after": {"move": "cesta_k_domu"}
+    , "welcome": [{"text": "Ahoj Evi, vítáme Tě na šifrovací hře ke Tvým narozeninám. Chceš-li vědět, jak komunikovat se systémem, pošli mu otazník."}]
+    , "bye": [{"text": "Jsi skvělá, že jsi došla až do cíle! Ještě jednou ti přejeme všechno nejlepší k narozeninám"}]
+    , "moves": { "cesta_k_domu": { "answer": "start"
+                       , "assignment": [{"text": "Až budeš mít celý den čas a budeš v Praze, vydej se k tančícímu domu. Až tam budeš, zadej “heslo start” a spustí se čas."}]
+                       , "next_state": {"puzzle": "zirafa"}
+                       }
+               , "prase": { "answer": "marie"
+                          , "assignment": [ {"text": "Tvůj závod začíná  na 50.0824756N, 14.4037850E (https://mapy.cz/turisticka?vlastni-body&uc=9gzGOxXvZM&ud=50%C2%B04%2756.907%22N%2C%2014%C2%B024%2713.632%22E&x=14.4037867&y=50.0824846&z=19). Je to uprostřed křižovatky cest Nebozízek-sady a Alej obětí totality. Poblíž se nachází informační tabule, v mapách.cz označená jako Komplex zahrad vrchu Petřína."}
+                                          , {"text": "Až dojdeš na start otevři roadbook v obálce s prasátkem. Až dorazíš do cíle tvého závodu, zadej česky křestní jméno osoby, jejíž socha stojí za tebou."}
+                                          ]
+                          , "next_state": {"puzzle": "ovce"}
+                          }
+               , "presun_k_hlavam": { "answer": "2"
+                                    , "assignment": [ {"text": "Přesuň se k západní straně Malostranského náměstí. Jakou další obálku otevřít ti povíme až po zadání hesla. Tím  je počet litinových hlav, které převyšují ostatní hlavy."}]
+                                    , "next_state": {"puzzle": "velbloud"}
+                                    }
+               }
+    , "puzzles": { "s_lahvi": { "answer": "tanec"
+                              , "assignment": [{"text": "Milá Evi, vylušti šifru v obálce s lahví a napiš do systému heslo a co ti vyšlo, např. “heslo mrkev” a systém ti poví co dál."}]
+                              , "hint": [{"text": "Omotej lahev tak abys překryla nápis na boku lahve."}]
+                              , "next_state": {"move": "cesta_k_domu"}
+                              }
+                 , "zirafa": { "answer": "dakar"
+                          , "assignment": [{"text": "Otevři obálku se žirafou, vylušti šifru. Výsledek zapiš ve tvaru “heslo mrkev”. Chceš-li nápovědu, zadej “nápověda” a následně “ano”"}]
+                          , "hint": [ {"text": "Vidíš ty čáry na následujícím obrázku a na Tančícím domě?"}
+                                    , {"image": "/definitions/cibulka_game/dum_napoveda.png"}
+                                    ]
+                          , "next_state": {"move": "prase"}
+                          } 
+                 , "ovce": { "answer": "48"
+                           , "assignment": [{"text": "Jistě ses už posadila, vylušti šifru v obálce s ovečkou. Řešení tě dovede na místo, vedle nějž je pamětní deska, kterou vyvěsil klub s číslem v názvu. Zadej “heslo” a ono číslo."}]
+                           , "hint": [ {"text": "Sedíš na kamenné lavičce? Tvar, který máš na papíře, je součástí složitějšího tvaru, kterého sis už jistě všimla."}
+                                    ]
+                           , "next_state": {"puzzle": "orel"}
+                           } 
+                 , "orel": { "answer": "mikulas"
+                           , "assignment": [{"text": "Otevři šifru s obrázkem orla. Heslo zadej bez diakritiky."}]
+                           , "hint": [ {"text": "Spoj postupně očíslované chyty každé cesty. Duha ti poradí, v jakém pořadí je číst."}
+                                    ]
+                           , "next_state": {"move": "presun_k_hlavam"}
+                           } 
+                 , "velbloud": { "answer": "čertovka"
+                           , "assignment": [{"text": "K vyřešení dalšího úkolu potřebuješ jen to, co je v obálce s velbloudem. Heslo prosím tentokrát s háčky"}]
+                           , "hint": [ {"text": "Porovnej dvojice. Hledej v nich písmena."}
+                                    ]
+                           , "next_state": {"puzzle": "medved"}
+                           } 
+                 , "medved": { "answer": "kajak"
+                           , "assignment": [{"text": "Šifru s medvědem si nejlépe vychutnáš na Čertovce. Heslem je dopravní prostředek."}]
+                           , "hint": [ {"text": "Vybarvi podle čísel. Použij pastelky z bedny."}
+                                    ]
+                           , "next_state": "finish"
+                           } 
+                 }
+}
