@@ -149,16 +149,6 @@ handle_event({call, From}, _Event, finish, #state{time0 = StartTime, finish_time
 handle_event({call, From}, {hello}, CurrentState, #state{game = #game{welcome = Welcome} = Game} = State) ->
     {keep_state, State, [{reply, From, Welcome }]};
 
-<<<<<<< HEAD
-handle_event({call, From}, _Event, finish, #state{} = State) ->
-    State2 = log(finish, finish, State),
-    {keep_state, State2, [{reply, From, [{text, <<"uz jsi v cili">>}]}]};
-handle_event({call, From}, {hello}, CurrentState, #state{game = Game} = State) ->
-    Assignment = get_assignment(CurrentState, Game),
-    {keep_state, State, [{reply, From, [{text, <<"vitej">>},{text, game_commands:help()} ] ++ Assignment }]};
-% internal clause
-=======
->>>>>>> master
 handle_event(info, clear_state, _, _) ->
     {keep_state, #state{}, []};
 
@@ -172,11 +162,6 @@ handle_event({call, From}, Content, StateName, State) ->
 %% private functions %%
 %%%%%%%%%%%%%%%%%%%%%%%
 
-<<<<<<< HEAD
-%% @doc get the assignment for current task from game definition
-get_assignment(finish, #game{}) ->
-    [{text, <<"gratulujeme k absolvovani hry">>}];
-=======
 on_correct_answer({StateType, _StateName} = CurrentState, #state{game = Game} = State) ->
     {NextState, NextAssignment} = get_next_assignment(CurrentState, Game),
     State2 = log(answer_ok, CurrentState, State),
@@ -195,7 +180,6 @@ on_correct_answer({StateType, _StateName} = CurrentState, #state{game = Game} = 
 
 get_assignment(finish, #game{bye = Bye}) ->
     Bye;
->>>>>>> master
 get_assignment({move, MoveName}, #game{moves = Moves}) ->
     #{MoveName := #task{assignment = Assignment}} = Moves,
     Assignment;
@@ -230,30 +214,20 @@ get_next_assignment(CurrentState, Game) ->
     Assignment = get_assignment(NextState, Game),
     {NextState, Assignment}.
 
-<<<<<<< HEAD
-%% @doc given number of seconds return a tuple with {Minutes, Seconds}
-minutes_seconds(Seconds) ->
-    {Seconds div 60, Seconds rem 60}.
-
-%% score:
-
-%% @doc write the event into game log attach a relative time
-=======
 start_timer_if_needed(CurrentState, #state{game = #game{time_starts_after = StartingState}} = State) ->
     case CurrentState =:= StartingState of
         true -> {true, State#state{time0 = erlang:monotonic_time()}};
         _ -> {false, State}
     end.
 
+%% @doc given number of seconds returns tuple {hours, minutes, seconds}
 hours_minutes_seconds(Seconds) ->
     {Hours, Rem1} = {Seconds div 3600, Seconds rem 3600},
     {Hours, Rem1 div 60, Rem1 rem 60}.
 
-%% score:
-
+%% @doc write the event into game log attach a relative time
 log(Event, StateName, #state{game_log = Log, time0 = undefined} = State) ->
     State#state{game_log = [{before_time_started, Event, StateName} | Log]};
->>>>>>> master
 log(Event, StateName, #state{game_log = Log, time0 = Time0} = State) ->
     EventTime = erlang:monotonic_time() - Time0,
     State#state{game_log = [{EventTime, Event, StateName} | Log]}.
