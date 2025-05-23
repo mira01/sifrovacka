@@ -1,16 +1,24 @@
-
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "Specification of a game",
   "type": "object",
   "$defs": {
     "message": {
-      "oneOf": [
+      "anyOf": [
         { "type": "object",
           "properties": {
             "text": {
               "type": "string",
               "description": "plaintext message"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties":{
+            "image": {
+              "type": "string",
+              "description": "path to an image file"
             }
           }
         }
@@ -48,18 +56,10 @@
     },
     "welcome": {
       "type": "array",
-      "uniqueItems": true,
+      "uniqueItems": false,
       "minItems": 1,
       "items": {
-        "required": [
-          "text"
-        ],
-        "properties": {
-          "text": {
-            "type": "string",
-            "minLength": 1
-          }
-        }
+        "$ref": "#/$defs/message"
       }
     },
     "bye": {
