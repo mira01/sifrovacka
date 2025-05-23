@@ -1,0 +1,586 @@
+
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Specification of a game",
+  "type": "object",
+  "$defs": {
+    "message": {
+      "oneOf": [
+        { "type": "object",
+          "properties": {
+            "text": {
+              "type": "string",
+              "description": "plaintext message"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Human readable name of the game"
+    },
+    "start": {
+      "type": "object",
+      "properties": {
+        "puzzle": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "puzzle"
+      ]
+    },
+    "time_starts_after": {
+      "type": "object",
+      "properties": {
+        "move": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "move"
+      ]
+    },
+    "welcome": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {
+        "required": [
+          "text"
+        ],
+        "properties": {
+          "text": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "bye": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {
+        "required": [
+          "text"
+        ],
+        "properties": {
+          "text": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "moves": {
+      "type": "object",
+      "properties": {
+        "cesta_k_domu": {
+          "type": "object",
+          "properties": {
+            "answer": {
+              "type": "string",
+              "minLength": 1
+            },
+            "assignment": {
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 1,
+              "items": {
+                "required": [
+                  "text"
+                ],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            },
+            "next_state": {
+              "type": "object",
+              "properties": {
+                "puzzle": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "puzzle"
+              ]
+            }
+          },
+          "required": [
+            "answer",
+            "assignment",
+            "next_state"
+          ]
+        },
+        "prase": {
+          "type": "object",
+          "properties": {
+            "answer": {
+              "type": "string",
+              "minLength": 1
+            },
+            "assignment": {
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 1,
+              "items": {
+                "required": [
+                  "text"
+                ],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            },
+            "next_state": {
+              "type": "object",
+              "properties": {
+                "puzzle": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "puzzle"
+              ]
+            }
+          },
+          "required": [
+            "answer",
+            "assignment",
+            "next_state"
+          ]
+        },
+        "presun_k_hlavam": {
+          "type": "object",
+          "properties": {
+            "answer": {
+              "type": "string",
+              "minLength": 1
+            },
+            "assignment": {
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 1,
+              "items": {
+                "required": [
+                  "text"
+                ],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            },
+            "next_state": {
+              "type": "object",
+              "properties": {
+                "puzzle": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "puzzle"
+              ]
+            }
+          },
+          "required": [
+            "answer",
+            "assignment",
+            "next_state"
+          ]
+        }
+      },
+      "required": [
+        "cesta_k_domu",
+        "prase",
+        "presun_k_hlavam"
+      ]
+    },
+    "puzzles": {
+      "type": "object",
+      "properties": {
+        "s_lahvi": {
+          "type": "object",
+          "properties": {
+            "answer": {
+              "type": "string",
+              "minLength": 1
+            },
+            "assignment": {
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 1,
+              "items": {
+                "required": [
+                  "text"
+                ],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            },
+            "hint": {
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 1,
+              "items": {
+                "required": [
+                  "text"
+                ],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            },
+            "next_state": {
+              "type": "object",
+              "properties": {
+                "move": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "move"
+              ]
+            }
+          },
+          "required": [
+            "answer",
+            "assignment",
+            "hint",
+            "next_state"
+          ]
+        },
+        "zirafa": {
+          "type": "object",
+          "properties": {
+            "answer": {
+              "type": "string",
+              "minLength": 1
+            },
+            "assignment": {
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 1,
+              "items": {
+                "required": [
+                  "text"
+                ],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            },
+            "hint": {
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 1,
+              "items": {
+                "required": [
+                  "text"
+                ],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            },
+            "next_state": {
+              "type": "object",
+              "properties": {
+                "move": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "move"
+              ]
+            }
+          },
+          "required": [
+            "answer",
+            "assignment",
+            "hint",
+            "next_state"
+          ]
+        },
+        "ovce": {
+          "type": "object",
+          "properties": {
+            "answer": {
+              "type": "string",
+              "minLength": 1
+            },
+            "assignment": {
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 1,
+              "items": {
+                "required": [
+                  "text"
+                ],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            },
+            "hint": {
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 1,
+              "items": {
+                "required": [
+                  "text"
+                ],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            },
+            "next_state": {
+              "type": "object",
+              "properties": {
+                "puzzle": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "puzzle"
+              ]
+            }
+          },
+          "required": [
+            "answer",
+            "assignment",
+            "hint",
+            "next_state"
+          ]
+        },
+        "orel": {
+          "type": "object",
+          "properties": {
+            "answer": {
+              "type": "string",
+              "minLength": 1
+            },
+            "assignment": {
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 1,
+              "items": {
+                "required": [
+                  "text"
+                ],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            },
+            "hint": {
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 1,
+              "items": {
+                "required": [
+                  "text"
+                ],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            },
+            "next_state": {
+              "type": "object",
+              "properties": {
+                "move": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "move"
+              ]
+            }
+          },
+          "required": [
+            "answer",
+            "assignment",
+            "hint",
+            "next_state"
+          ]
+        },
+        "velbloud": {
+          "type": "object",
+          "properties": {
+            "answer": {
+              "type": "string",
+              "minLength": 1
+            },
+            "assignment": {
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 1,
+              "items": {
+                "required": [
+                  "text"
+                ],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            },
+            "hint": {
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 1,
+              "items": {
+                "required": [
+                  "text"
+                ],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            },
+            "next_state": {
+              "type": "object",
+              "properties": {
+                "puzzle": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "puzzle"
+              ]
+            }
+          },
+          "required": [
+            "answer",
+            "assignment",
+            "hint",
+            "next_state"
+          ]
+        },
+        "medved": {
+          "type": "object",
+          "properties": {
+            "answer": {
+              "type": "string",
+              "minLength": 1
+            },
+            "assignment": {
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 1,
+              "items": {
+                "required": [
+                  "text"
+                ],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            },
+            "hint": {
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 1,
+              "items": {
+                "required": [
+                  "text"
+                ],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            },
+            "next_state": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "answer",
+            "assignment",
+            "hint",
+            "next_state"
+          ]
+        }
+      },
+      "required": [
+        "s_lahvi",
+        "zirafa",
+        "ovce",
+        "orel",
+        "velbloud",
+        "medved"
+      ]
+    }
+  },
+  "required": [
+    "title",
+    "start",
+    "time_starts_after",
+    "welcome",
+    "bye",
+    "moves",
+    "puzzles"
+  ]
+}
