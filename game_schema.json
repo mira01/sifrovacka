@@ -23,6 +23,27 @@
           }
         }
       ]
+    },
+    "reference": {
+      "anyOf": [
+        { "type": "object",
+          "properties": {
+            "text": {
+              "type": "string",
+              "description": "plaintext message"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties":{
+            "image": {
+              "type": "string",
+              "description": "path to an image file"
+            }
+          }
+        }
+      ]
     }
   },
   "properties": {
@@ -31,16 +52,7 @@
       "description": "Human readable name of the game"
     },
     "start": {
-      "type": "object",
-      "properties": {
-        "puzzle": {
-          "type": "string",
-          "minLength": 1
-        }
-      },
-      "required": [
-        "puzzle"
-      ]
+      "$ref": "#/$defs/reference"    
     },
     "time_starts_after": {
       "type": "object",
@@ -64,18 +76,10 @@
     },
     "bye": {
       "type": "array",
-      "uniqueItems": true,
+      "uniqueItems": false,
       "minItems": 1,
       "items": {
-        "required": [
-          "text"
-        ],
-        "properties": {
-          "text": {
-            "type": "string",
-            "minLength": 1
-          }
-        }
+        "$ref": "#/$defs/message"
       }
     },
     "moves": {
