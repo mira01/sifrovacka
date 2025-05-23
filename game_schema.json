@@ -44,7 +44,31 @@
           }
         }
       ]
-    }
+    },
+    "move": {
+          "type": "object",
+          "properties": {
+            "answer": {
+              "type": "string",
+              "minLength": 1
+            },
+            "assignment": {
+              "type": "array",
+              "uniqueItems": false,
+              "minItems": 1,
+              "items": {
+                "$ref":"#/$defs/message"
+              }
+            },
+            "next_state": {"$ref":"#/$defs/message"
+            }
+          },
+          "required": [
+            "answer",
+            "assignment",
+            "next_state"
+          ]
+        }
   },
   "properties": {
     "title": {
@@ -55,16 +79,7 @@
       "$ref": "#/$defs/reference"    
     },
     "time_starts_after": {
-      "type": "object",
-      "properties": {
-        "move": {
-          "type": "string",
-          "minLength": 1
-        }
-      },
-      "required": [
-        "move"
-      ]
+      "$ref": "#/$defs/reference"
     },
     "welcome": {
       "type": "array",
@@ -84,139 +99,10 @@
     },
     "moves": {
       "type": "object",
-      "properties": {
-        "cesta_k_domu": {
-          "type": "object",
-          "properties": {
-            "answer": {
-              "type": "string",
-              "minLength": 1
-            },
-            "assignment": {
-              "type": "array",
-              "uniqueItems": true,
-              "minItems": 1,
-              "items": {
-                "required": [
-                  "text"
-                ],
-                "properties": {
-                  "text": {
-                    "type": "string",
-                    "minLength": 1
-                  }
-                }
-              }
-            },
-            "next_state": {
-              "type": "object",
-              "properties": {
-                "puzzle": {
-                  "type": "string",
-                  "minLength": 1
-                }
-              },
-              "required": [
-                "puzzle"
-              ]
-            }
-          },
-          "required": [
-            "answer",
-            "assignment",
-            "next_state"
-          ]
-        },
-        "prase": {
-          "type": "object",
-          "properties": {
-            "answer": {
-              "type": "string",
-              "minLength": 1
-            },
-            "assignment": {
-              "type": "array",
-              "uniqueItems": true,
-              "minItems": 1,
-              "items": {
-                "required": [
-                  "text"
-                ],
-                "properties": {
-                  "text": {
-                    "type": "string",
-                    "minLength": 1
-                  }
-                }
-              }
-            },
-            "next_state": {
-              "type": "object",
-              "properties": {
-                "puzzle": {
-                  "type": "string",
-                  "minLength": 1
-                }
-              },
-              "required": [
-                "puzzle"
-              ]
-            }
-          },
-          "required": [
-            "answer",
-            "assignment",
-            "next_state"
-          ]
-        },
-        "presun_k_hlavam": {
-          "type": "object",
-          "properties": {
-            "answer": {
-              "type": "string",
-              "minLength": 1
-            },
-            "assignment": {
-              "type": "array",
-              "uniqueItems": true,
-              "minItems": 1,
-              "items": {
-                "required": [
-                  "text"
-                ],
-                "properties": {
-                  "text": {
-                    "type": "string",
-                    "minLength": 1
-                  }
-                }
-              }
-            },
-            "next_state": {
-              "type": "object",
-              "properties": {
-                "puzzle": {
-                  "type": "string",
-                  "minLength": 1
-                }
-              },
-              "required": [
-                "puzzle"
-              ]
-            }
-          },
-          "required": [
-            "answer",
-            "assignment",
-            "next_state"
-          ]
-        }
-      },
-      "required": [
-        "cesta_k_domu",
-        "prase",
-        "presun_k_hlavam"
-      ]
+      "additionalProperties": {
+        "type": "object",
+        "$ref": "#/$defs/move"
+      }
     },
     "puzzles": {
       "type": "object",
