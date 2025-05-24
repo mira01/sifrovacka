@@ -34,6 +34,7 @@
     },
     "reference": {
       "anyOf": [
+        {"const": "finish"},
         { "type": "object",
           "properties": {
             "puzzle": {
@@ -58,12 +59,16 @@
           "properties": {
             "answer": {
               "type": "string",
-              "minLength": 1
+              "minLength": 1,
+              "description": "the correct answer player is expected to enter"
             },
             "assignment": {
-              "$ref":"#/$defs/messages"
+              "$ref":"#/$defs/messages",
+              "description": "the task that is given to the player"
             },
-            "next_state": {"$ref":"#/$defs/reference"
+            "next_state": {
+              "$ref":"#/$defs/reference",
+              "description": "when the player enter the correct answer, this field describes what game state is the user taken to. either another move, a puzzle or the game end"
             }
           },
           "required": [
@@ -71,12 +76,37 @@
             "assignment",
             "next_state"
           ]
+        },
+    "puzzle": {
+          "type": "object",
+          "properties": {
+            "answer": {
+              "type": "string",
+              "minLength": 1
+            },
+            "assignment": {
+              "$ref":"#/$defs/messages"
+            },
+            "hint": {
+              "$ref": "#/$defs/messages",
+              "description": "a list of messages that are sent to the player if he needs a bit of help with the task"
+            },
+            "next_state": {
+              "$ref":"#/$defs/reference"
+            }
+          },
+          "required": [
+            "answer",
+            "assignment",
+            "next_state",
+            "hint"
+          ]
         }
   },
   "properties": {
     "title": {
       "type": "string",
-      "description": "Human readable name of the game"
+      "description": "human readable name of the game"
     },
     "start": {
       "$ref": "#/$defs/reference"    
@@ -99,362 +129,10 @@
     },
     "puzzles": {
       "type": "object",
-      "properties": {
-        "s_lahvi": {
-          "type": "object",
-          "properties": {
-            "answer": {
-              "type": "string",
-              "minLength": 1
-            },
-            "assignment": {
-              "type": "array",
-              "uniqueItems": true,
-              "minItems": 1,
-              "items": {
-                "required": [
-                  "text"
-                ],
-                "properties": {
-                  "text": {
-                    "type": "string",
-                    "minLength": 1
-                  }
-                }
-              }
-            },
-            "hint": {
-              "type": "array",
-              "uniqueItems": true,
-              "minItems": 1,
-              "items": {
-                "required": [
-                  "text"
-                ],
-                "properties": {
-                  "text": {
-                    "type": "string",
-                    "minLength": 1
-                  }
-                }
-              }
-            },
-            "next_state": {
-              "type": "object",
-              "properties": {
-                "move": {
-                  "type": "string",
-                  "minLength": 1
-                }
-              },
-              "required": [
-                "move"
-              ]
-            }
-          },
-          "required": [
-            "answer",
-            "assignment",
-            "hint",
-            "next_state"
-          ]
-        },
-        "zirafa": {
-          "type": "object",
-          "properties": {
-            "answer": {
-              "type": "string",
-              "minLength": 1
-            },
-            "assignment": {
-              "type": "array",
-              "uniqueItems": true,
-              "minItems": 1,
-              "items": {
-                "required": [
-                  "text"
-                ],
-                "properties": {
-                  "text": {
-                    "type": "string",
-                    "minLength": 1
-                  }
-                }
-              }
-            },
-            "hint": {
-              "type": "array",
-              "uniqueItems": true,
-              "minItems": 1,
-              "items": {
-                "required": [
-                  "text"
-                ],
-                "properties": {
-                  "text": {
-                    "type": "string",
-                    "minLength": 1
-                  }
-                }
-              }
-            },
-            "next_state": {
-              "type": "object",
-              "properties": {
-                "move": {
-                  "type": "string",
-                  "minLength": 1
-                }
-              },
-              "required": [
-                "move"
-              ]
-            }
-          },
-          "required": [
-            "answer",
-            "assignment",
-            "hint",
-            "next_state"
-          ]
-        },
-        "ovce": {
-          "type": "object",
-          "properties": {
-            "answer": {
-              "type": "string",
-              "minLength": 1
-            },
-            "assignment": {
-              "type": "array",
-              "uniqueItems": true,
-              "minItems": 1,
-              "items": {
-                "required": [
-                  "text"
-                ],
-                "properties": {
-                  "text": {
-                    "type": "string",
-                    "minLength": 1
-                  }
-                }
-              }
-            },
-            "hint": {
-              "type": "array",
-              "uniqueItems": true,
-              "minItems": 1,
-              "items": {
-                "required": [
-                  "text"
-                ],
-                "properties": {
-                  "text": {
-                    "type": "string",
-                    "minLength": 1
-                  }
-                }
-              }
-            },
-            "next_state": {
-              "type": "object",
-              "properties": {
-                "puzzle": {
-                  "type": "string",
-                  "minLength": 1
-                }
-              },
-              "required": [
-                "puzzle"
-              ]
-            }
-          },
-          "required": [
-            "answer",
-            "assignment",
-            "hint",
-            "next_state"
-          ]
-        },
-        "orel": {
-          "type": "object",
-          "properties": {
-            "answer": {
-              "type": "string",
-              "minLength": 1
-            },
-            "assignment": {
-              "type": "array",
-              "uniqueItems": true,
-              "minItems": 1,
-              "items": {
-                "required": [
-                  "text"
-                ],
-                "properties": {
-                  "text": {
-                    "type": "string",
-                    "minLength": 1
-                  }
-                }
-              }
-            },
-            "hint": {
-              "type": "array",
-              "uniqueItems": true,
-              "minItems": 1,
-              "items": {
-                "required": [
-                  "text"
-                ],
-                "properties": {
-                  "text": {
-                    "type": "string",
-                    "minLength": 1
-                  }
-                }
-              }
-            },
-            "next_state": {
-              "type": "object",
-              "properties": {
-                "move": {
-                  "type": "string",
-                  "minLength": 1
-                }
-              },
-              "required": [
-                "move"
-              ]
-            }
-          },
-          "required": [
-            "answer",
-            "assignment",
-            "hint",
-            "next_state"
-          ]
-        },
-        "velbloud": {
-          "type": "object",
-          "properties": {
-            "answer": {
-              "type": "string",
-              "minLength": 1
-            },
-            "assignment": {
-              "type": "array",
-              "uniqueItems": true,
-              "minItems": 1,
-              "items": {
-                "required": [
-                  "text"
-                ],
-                "properties": {
-                  "text": {
-                    "type": "string",
-                    "minLength": 1
-                  }
-                }
-              }
-            },
-            "hint": {
-              "type": "array",
-              "uniqueItems": true,
-              "minItems": 1,
-              "items": {
-                "required": [
-                  "text"
-                ],
-                "properties": {
-                  "text": {
-                    "type": "string",
-                    "minLength": 1
-                  }
-                }
-              }
-            },
-            "next_state": {
-              "type": "object",
-              "properties": {
-                "puzzle": {
-                  "type": "string",
-                  "minLength": 1
-                }
-              },
-              "required": [
-                "puzzle"
-              ]
-            }
-          },
-          "required": [
-            "answer",
-            "assignment",
-            "hint",
-            "next_state"
-          ]
-        },
-        "medved": {
-          "type": "object",
-          "properties": {
-            "answer": {
-              "type": "string",
-              "minLength": 1
-            },
-            "assignment": {
-              "type": "array",
-              "uniqueItems": true,
-              "minItems": 1,
-              "items": {
-                "required": [
-                  "text"
-                ],
-                "properties": {
-                  "text": {
-                    "type": "string",
-                    "minLength": 1
-                  }
-                }
-              }
-            },
-            "hint": {
-              "type": "array",
-              "uniqueItems": true,
-              "minItems": 1,
-              "items": {
-                "required": [
-                  "text"
-                ],
-                "properties": {
-                  "text": {
-                    "type": "string",
-                    "minLength": 1
-                  }
-                }
-              }
-            },
-            "next_state": {
-              "type": "string",
-              "minLength": 1
-            }
-          },
-          "required": [
-            "answer",
-            "assignment",
-            "hint",
-            "next_state"
-          ]
-        }
-      },
-      "required": [
-        "s_lahvi",
-        "zirafa",
-        "ovce",
-        "orel",
-        "velbloud",
-        "medved"
-      ]
+      "additionalProperties": {
+        "type": "object",
+        "$ref": "#/$defs/puzzle"
+      }
     }
   },
   "required": [
