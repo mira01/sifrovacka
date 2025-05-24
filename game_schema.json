@@ -24,22 +24,30 @@
         }
       ]
     },
+    "messages": {
+      "type": "array",
+      "uniqueItems": false,
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/message"
+      }
+    },
     "reference": {
       "anyOf": [
         { "type": "object",
           "properties": {
-            "text": {
+            "puzzle": {
               "type": "string",
-              "description": "plaintext message"
+              "description": "name of a puzzle"
             }
           }
         },
         {
           "type": "object",
           "properties":{
-            "image": {
+            "move": {
               "type": "string",
-              "description": "path to an image file"
+              "description": "name of a move"
             }
           }
         }
@@ -53,14 +61,9 @@
               "minLength": 1
             },
             "assignment": {
-              "type": "array",
-              "uniqueItems": false,
-              "minItems": 1,
-              "items": {
-                "$ref":"#/$defs/message"
-              }
+              "$ref":"#/$defs/messages"
             },
-            "next_state": {"$ref":"#/$defs/message"
+            "next_state": {"$ref":"#/$defs/reference"
             }
           },
           "required": [
@@ -82,20 +85,10 @@
       "$ref": "#/$defs/reference"
     },
     "welcome": {
-      "type": "array",
-      "uniqueItems": false,
-      "minItems": 1,
-      "items": {
-        "$ref": "#/$defs/message"
-      }
+      "$ref":"#/$defs/messages"
     },
     "bye": {
-      "type": "array",
-      "uniqueItems": false,
-      "minItems": 1,
-      "items": {
-        "$ref": "#/$defs/message"
-      }
+      "$ref": "#/$defs/messages" 
     },
     "moves": {
       "type": "object",
