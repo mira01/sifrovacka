@@ -109,30 +109,36 @@
       "description": "human readable name of the game"
     },
     "start": {
-      "$ref": "#/$defs/reference"    
+      "$ref": "#/$defs/reference",
+      "description": "which move or puzzle the game starts with"
     },
     "time_starts_after": {
-      "$ref": "#/$defs/reference"
+      "$ref": "#/$defs/reference",
+      "description": "after which correctly answered move or puzzle the time should start counting"
     },
     "welcome": {
-      "$ref":"#/$defs/messages"
+      "$ref":"#/$defs/messages",
+      "description": "messages that are displayed to the user once he starts the game"
     },
     "bye": {
-      "$ref": "#/$defs/messages" 
-    },
-    "moves": {
-      "type": "object",
-      "additionalProperties": {
-        "type": "object",
-        "$ref": "#/$defs/move"
-      }
+      "$ref": "#/$defs/messages",
+      "description": "messages that are displayed to the user once he finishes the game" 
     },
     "puzzles": {
       "type": "object",
       "additionalProperties": {
         "type": "object",
         "$ref": "#/$defs/puzzle"
-      }
+      },
+      "description": "main part; the tasks that the user tries to accomplish" 
+    },
+    "moves": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "$ref": "#/$defs/move"
+      },
+      "description": "optional connections between puzzles"
     }
   },
   "required": [
