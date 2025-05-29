@@ -34,7 +34,6 @@
     },
     "reference": {
       "anyOf": [
-        {"const": "finish"},
         { "type": "object",
           "properties": {
             "puzzle": {
@@ -51,7 +50,8 @@
               "description": "name of a move"
             }
           }
-        }
+        },
+        {"const": "finish"}
       ]
     },
     "move": {
